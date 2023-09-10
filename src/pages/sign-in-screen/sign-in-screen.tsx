@@ -1,18 +1,16 @@
-function Player(): JSX.Element {
+import Logo from '../../components/logo/logo';
+import { Helmet } from 'react-helmet-async';
+
+function SignInScreen(): JSX.Element {
   return(
     <div className="user-page">
+      <Helmet>
+        <title>WTW. Sign in</title>
+      </Helmet>
       <header className="page-header user-page__head">
-        <div className="logo">
-          <a href="main.html" className="logo__link">
-            <span className="logo__letter logo__letter--1">W</span>
-            <span className="logo__letter logo__letter--2">T</span>
-            <span className="logo__letter logo__letter--3">W</span>
-          </a>
-        </div>
-
+        <Logo />
         <h1 className="page-title user-page__title">Sign in</h1>
       </header>
-
       <div className="sign-in user-page__content">
         <form action="#" className="sign-in__form">
           <div className="sign-in__fields">
@@ -48,4 +46,4 @@ function Player(): JSX.Element {
   );
 }
 
-export default Player;
+export default SignInScreen;

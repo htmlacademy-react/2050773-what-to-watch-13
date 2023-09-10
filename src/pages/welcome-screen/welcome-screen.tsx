@@ -1,4 +1,5 @@
 import FilmCard from '../../components/film-card/film-card';
+import { Helmet } from 'react-helmet-async';
 
 type WelcomeScreenProps = {
   filmscardsCount : number;
@@ -15,6 +16,9 @@ function WelcomeScreen({filmscardsCount}: WelcomeScreenProps): JSX.Element {
   return(
     <>
       <section className="film-card">
+        <Helmet>
+          <title>WTW. Welcome!</title>
+        </Helmet>
         <div className="film-card__bg">
           <img src="img/bg-the-grand-budapest-hotel.jpg" alt="The Grand Budapest Hotel" />
         </div>
