@@ -15,6 +15,8 @@ type AppScreenProps = {
   filmscardsCount: number;
 }
 
+const authorizationStatus = AuthorizationStatus.NoAuth;
+
 function App({filmscardsCount}: AppScreenProps): JSX.Element {
   return(
     <HelmetProvider>
@@ -39,7 +41,7 @@ function App({filmscardsCount}: AppScreenProps): JSX.Element {
           <Route
             path={AppRoute.MyList}
             element={
-              <PrivateRoute authorizationStatus={AuthorizationStatus.NoAuth}>
+              <PrivateRoute authorizationStatus={authorizationStatus}>
                 <MyListScreen />
               </PrivateRoute>
             }
@@ -47,7 +49,7 @@ function App({filmscardsCount}: AppScreenProps): JSX.Element {
           <Route
             path={AppRoute.AddReview}
             element={
-              <PrivateRoute authorizationStatus={AuthorizationStatus.NoAuth}>
+              <PrivateRoute authorizationStatus={authorizationStatus}>
                 <AddReviewScreen />
               </PrivateRoute>
             }

@@ -1,5 +1,5 @@
-import Logo from '../../components/logo/logo';
 import { Helmet } from 'react-helmet-async';
+import Header from '../../components/header/header';
 
 function SignInScreen(): JSX.Element {
   return(
@@ -7,10 +7,7 @@ function SignInScreen(): JSX.Element {
       <Helmet>
         <title>WTW. Sign in</title>
       </Helmet>
-      <header className="page-header user-page__head">
-        <Logo />
-        <h1 className="page-title user-page__title">Sign in</h1>
-      </header>
+      <Header/>
       <div className="sign-in user-page__content">
         <form action="#" className="sign-in__form">
           <div className="sign-in__fields">
@@ -27,6 +24,7 @@ function SignInScreen(): JSX.Element {
             <button className="sign-in__btn" type="submit">Sign in</button>
           </div>
         </form>
+      H
       </div>
 
       <footer className="page-footer">

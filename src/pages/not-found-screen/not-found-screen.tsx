@@ -1,5 +1,6 @@
 import { Helmet } from 'react-helmet-async';
-import Logo from '../../components/logo/logo';
+import Header from '../../components/header/header';
+import { Link } from 'react-router-dom';
 
 
 function NotFoundScreen(): JSX.Element {
@@ -8,13 +9,12 @@ function NotFoundScreen(): JSX.Element {
       <Helmet>
         <title>WTW. Not found</title>
       </Helmet>
-      <header className="page-header user-page__head">
-        <Logo />
-        <h1 className="page-title user-page__title">Sign in</h1>
-      </header>
+
+      <Header />
 
       <div className="sign-in user-page__content">
         <h2>Oops! No films so far...</h2>
+        <Link to='/'>Return to Main Page</Link>
       </div>
 
       <footer className="page-footer">
