@@ -1,9 +1,9 @@
-import { Films } from '../types/films';
+import { TFilms } from '../types/films';
 
-export const films: Films[] = [
+export const films: TFilms[] = [
   {
     'id': 'aba664c3-bdf3-4fb3-b8f3-42e007864bbf',
-    'name': 'The Grand Budapest Hotel',
+    'name': 'The Grand Budapest Hotel!!!!',
     'posterImage': 'https://url-to-image/image.jpg',
     'backgroundImage': 'https://url-to-image/image.jpg',
     'backgroundColor': '#ffffff',

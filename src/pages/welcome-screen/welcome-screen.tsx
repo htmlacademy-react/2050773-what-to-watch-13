@@ -1,18 +1,13 @@
-import FilmCard from '../../components/film-card/film-card';
 import { Helmet } from 'react-helmet-async';
 import Header from '../../components/header/header';
+import { TFilms } from '../../types/films';
+import FilmCardsList from '../../components/film-cards-list/film-cards-list';
 
 type WelcomeScreenProps = {
-  filmscardsCount : number;
+  films: TFilms[];
 }
 
-function WelcomeScreen({filmscardsCount}: WelcomeScreenProps): JSX.Element {
-
-  const filmCards = [];
-
-  for (let i = 0; i < filmscardsCount; i++) {
-    filmCards.push(<FilmCard key={i} />);
-  }
+function WelcomeScreen({ films}: WelcomeScreenProps): JSX.Element {
 
   return(
     <>
@@ -91,10 +86,8 @@ function WelcomeScreen({filmscardsCount}: WelcomeScreenProps): JSX.Element {
               <a href="#" className="catalog__genres-link">Thrillers</a>
             </li>
           </ul>
+          <FilmCardsList films={films} />
 
-          <div className="catalog__films-list">
-            {filmCards}
-          </div>
           <div className="catalog__more">
             <button className="catalog__button" type="button">Show more</button>
           </div>

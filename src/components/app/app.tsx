@@ -9,22 +9,22 @@ import MyListScreen from '../../pages/my-list-screen/my-list-screen';
 import AddReviewScreen from '../../pages/add-review-screen/add-review-screen';
 import NotFoundScreen from '../../pages/not-found-screen/not-found-screen';
 import PrivateRoute from '../private-route/private-route';
-
+import { TFilms } from '../../types/films';
 
 type AppScreenProps = {
-  filmscardsCount: number;
+  films: TFilms[];
 }
 
 const authorizationStatus = AuthorizationStatus.NoAuth;
 
-function App({filmscardsCount}: AppScreenProps): JSX.Element {
+function App({ films}: AppScreenProps): JSX.Element {
   return(
     <HelmetProvider>
       <BrowserRouter>
         <Routes>
           <Route
             path={AppRoute.Root}
-            element={<WelcomeScreen filmscardsCount={filmscardsCount} />}
+            element={<WelcomeScreen films={films} />}
           />
           <Route
             path={AppRoute.SignIn}
