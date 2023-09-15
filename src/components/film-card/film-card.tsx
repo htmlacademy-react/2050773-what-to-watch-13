@@ -1,6 +1,5 @@
 import { TFilms } from '../../types/films';
 
-
 type FilmCardProps = {
   film: TFilms;
   onHover: (film: TFilms) => void;

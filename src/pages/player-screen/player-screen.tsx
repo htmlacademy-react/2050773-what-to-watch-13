@@ -1,6 +1,12 @@
 import { Helmet } from 'react-helmet-async';
+import { TFilms } from '../../types/films';
 
-function PlayerScreen(): JSX.Element {
+type PlayerProps = {
+  film: TFilms;
+}
+
+function PlayerScreen({film}: PlayerProps): JSX.Element {
+  const { name } = film;
   return(
     <div className="player">
       <Helmet>
@@ -26,7 +32,7 @@ function PlayerScreen(): JSX.Element {
             </svg>
             <span>Play</span>
           </button>
-          <div className="player__name">Transpotting</div>
+          <div className="player__name">{name}</div>
 
           <button type="button" className="player__full-screen">
             <svg viewBox="0 0 27 27" width="27" height="27">

@@ -1,8 +1,15 @@
 import Header from '../../components/header/header';
 import {Helmet} from 'react-helmet-async';
+import { TFilms } from '../../types/films';
+
+type PlayerProps = {
+  film: TFilms;
+}
 
 
-function AddReviewScreen(): JSX.Element {
+function AddReviewScreen({film}: PlayerProps): JSX.Element {
+  const { name } = film;
+
   return(
     <section className="film-card film-card--full">
       <Helmet>
@@ -12,7 +19,7 @@ function AddReviewScreen(): JSX.Element {
         <nav className="breadcrumbs">
           <ul className="breadcrumbs__list">
             <li className="breadcrumbs__item">
-              <a href="film-page.html" className="breadcrumbs__link">The Grand Budapest Hotel</a>
+              <a href="film-page.html" className="breadcrumbs__link">{name}</a>
             </li>
             <li className="breadcrumbs__item">
               <a className="breadcrumbs__link">Add review</a>

@@ -32,7 +32,7 @@ function App({ films}: AppScreenProps): JSX.Element {
           />
           <Route
             path={AppRoute.Player}
-            element={<PlayerScreen />}
+            element={<PlayerScreen film={films[0]} />}
           />
           <Route
             path={AppRoute.Film}
@@ -50,7 +50,7 @@ function App({ films}: AppScreenProps): JSX.Element {
             path={AppRoute.AddReview}
             element={
               <PrivateRoute authorizationStatus={authorizationStatus}>
-                <AddReviewScreen />
+                <AddReviewScreen film={films[3]} />
               </PrivateRoute>
             }
           />
