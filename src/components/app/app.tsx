@@ -15,7 +15,7 @@ type AppScreenProps = {
   films: TFilms[];
 }
 
-const authorizationStatus = AuthorizationStatus.NoAuth;
+const authorizationStatus = AuthorizationStatus.Auth;
 
 function App({ films}: AppScreenProps): JSX.Element {
   return(
@@ -42,7 +42,7 @@ function App({ films}: AppScreenProps): JSX.Element {
             path={AppRoute.MyList}
             element={
               <PrivateRoute authorizationStatus={authorizationStatus}>
-                <MyListScreen />
+                <MyListScreen films={films} />
               </PrivateRoute>
             }
           />
