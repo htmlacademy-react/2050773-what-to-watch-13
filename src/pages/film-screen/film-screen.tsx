@@ -1,7 +1,18 @@
 import Header from '../../components/header/header';
 import { Helmet } from 'react-helmet-async';
+import { TFilms } from '../../types/films';
+import Footer from '../../components/footer/footer';
 
-function FilmScreen(): JSX.Element {
+type FilmCardProps = {
+  film: TFilms;
+};
+
+function FilmScreen({film}: FilmCardProps): JSX.Element {
+  const { name, description, director,
+    rating, scoresCount, starring, genre, released } = film;
+  const formattedStarring = starring.join(', ');
+
+
   return(
     <>
       <section className="film-card film-card--full">
@@ -10,15 +21,15 @@ function FilmScreen(): JSX.Element {
         </Helmet>
         <div className="film-card__hero">
 
-          <Header className='film-card__head' backgroundImage="img/bg-the-grand-budapest-hotel.jpg" />
+          <Header backgroundImage="img/bg-the-grand-budapest-hotel.jpg" />
 
 
           <div className="film-card__wrap">
             <div className="film-card__desc">
-              <h2 className="film-card__title">The Grand Budapest Hotel</h2>
+              <h2 className="film-card__title">{name}</h2>
               <p className="film-card__meta">
-                <span className="film-card__genre">Drama</span>
-                <span className="film-card__year">2014</span>
+                <span className="film-card__genre">{genre}</span>
+                <span className="film-card__year">{released}</span>
               </p>
 
               <div className="film-card__buttons">
@@ -63,21 +74,20 @@ function FilmScreen(): JSX.Element {
               </nav>
 
               <div className="film-rating">
-                <div className="film-rating__score">8,9</div>
+                <div className="film-rating__score">{rating}</div>
                 <p className="film-rating__meta">
                   <span className="film-rating__level">Very good</span>
-                  <span className="film-rating__count">240 ratings</span>
+                  <span className="film-rating__count">{scoresCount} ratings</span>
                 </p>
               </div>
 
               <div className="film-card__text">
-                <p>In the 1930s, the Grand Budapest Hotel is a popular European ski resort, presided over by concierge Gustave H. (Ralph Fiennes). Zero, a junior lobby boy, becomes Gustave`&apos`s friend and protege.</p>
+                <p>{description}</p>
 
-                <p>Gustave prides himself on providing first-class service to the hotel`&apos`s guests, including satisfying the sexual needs of the many elderly women who stay there. When one of Gustave`&apos`s lovers dies mysteriously, Gustave finds himself the recipient of a priceless painting and the chief suspect in her murder.</p>
 
-                <p className="film-card__director"><strong>Director: Wes Anderson</strong></p>
+                <p className="film-card__director"><strong>Director: {director}</strong></p>
 
-                <p className="film-card__starring"><strong>Starring: Bill Murray, Edward Norton, Jude Law, Willem Dafoe and other</strong></p>
+                <p className="film-card__starring"><strong>Starring: {formattedStarring}, and other</strong></p>
               </div>
             </div>
           </div>
@@ -125,20 +135,7 @@ function FilmScreen(): JSX.Element {
             </article>
           </div>
         </section>
-
-        <footer className="page-footer">
-          <div className="logo">
-            <a href="main.html" className="logo__link logo__link--light">
-              <span className="logo__letter logo__letter--1">W</span>
-              <span className="logo__letter logo__letter--2">T</span>
-              <span className="logo__letter logo__letter--3">W</span>
-            </a>
-          </div>
-
-          <div className="copyright">
-            <p>© 2019 What to watch Ltd.</p>
-          </div>
-        </footer>
+        <Footer />
       </div>
     </>
 

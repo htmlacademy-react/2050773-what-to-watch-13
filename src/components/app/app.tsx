@@ -36,7 +36,7 @@ function App({ films}: AppScreenProps): JSX.Element {
           />
           <Route
             path={AppRoute.Film}
-            element={<FilmScreen />}
+            element={<FilmScreen film={films[5]} />}
           />
           <Route
             path={AppRoute.MyList}
