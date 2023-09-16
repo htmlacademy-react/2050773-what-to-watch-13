@@ -24,7 +24,7 @@ function AddReview(): JSX.Element {
                     onChange={(e) => setRating(e.target.value)}
                     key={num}
                   />
-                  <label className='rating__label' htmlFor={`star-${num}`}> Ratung {num}</label>
+                  <label className='rating__label' htmlFor={`star-${num}`}> Rating {num}</label>
                 </>
               ))
             }
