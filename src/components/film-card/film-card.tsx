@@ -1,4 +1,5 @@
 import { TFilms } from '../../types/films';
+import { Link } from 'react-router-dom';
 
 type FilmCardProps = {
   film: TFilms;
@@ -17,7 +18,7 @@ function FilmCard({film, onHover, onLeave}: FilmCardProps): JSX.Element{
         <img src="img/fantastic-beasts-the-crimes-of-grindelwald.jpg" alt={name} width="280" height="175" />
       </div>
       <h3 className="small-film-card__title">
-        <a className="small-film-card__link" href="film-page.html">{name}</a>
+        <Link className="small-film-card__link" to="/films/:id">{name}</Link>
       </h3>
     </article>
   );
