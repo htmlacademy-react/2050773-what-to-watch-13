@@ -10,14 +10,16 @@ import AddReviewScreen from '../../pages/add-review-screen/add-review-screen';
 import NotFoundScreen from '../../pages/not-found-screen/not-found-screen';
 import PrivateRoute from '../private-route/private-route';
 import { TFilms } from '../../types/films';
+import { TReview } from '../../types/review';
 
 type AppScreenProps = {
   films: TFilms[];
+  reviews: TReview[];
 }
 
 const authorizationStatus = AuthorizationStatus.Auth;
 
-function App({ films}: AppScreenProps): JSX.Element {
+function App({ films, reviews }: AppScreenProps): JSX.Element {
   return(
     <HelmetProvider>
       <BrowserRouter>
@@ -36,7 +38,7 @@ function App({ films}: AppScreenProps): JSX.Element {
           />
           <Route
             path={AppRoute.Film}
-            element={<FilmScreen film={films[5]} />}
+            element={<FilmScreen film={films[5]} reviews={reviews} />}
           />
           <Route
             path={AppRoute.MyList}

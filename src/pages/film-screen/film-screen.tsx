@@ -5,14 +5,23 @@ import Footer from '../../components/footer/footer';
 import Tabs from '../../components/tabs/tabs';
 import { TTab } from '../../types/tabs';
 import { useState } from 'react';
+import { TReview } from '../../types/review';
+
 
 type FilmCardProps = {
   film: TFilms;
+  reviews: TReview[];
 };
 
-function FilmScreen({film}: FilmCardProps): JSX.Element {
-  const { name, description, director, rating, scoresCount, starring, genre, released } = film;
+
+function FilmScreen({film, reviews}: FilmCardProps): JSX.Element {
+  const { name, description, director, rating, scoresCount, starring, genre, released, runTime } = film;
   const formattedStarring = starring.join(', ');
+  const hours = Math.floor(runTime / 60);
+  const minutes = runTime % 60;
+
+  const firstHalfReviews = reviews.slice(0, Math.ceil(reviews.length / 2));
+  const secondHalfReviews = reviews.slice(Math.ceil(reviews.length / 2));
 
   const [activeTab, setActiveTab] = useState<TTab>('Overview');
 
@@ -45,7 +54,7 @@ function FilmScreen({film}: FilmCardProps): JSX.Element {
             <div className="film-card__text-col">
               <p className="film-card__details-item">
                 <strong className="film-card__details-name">Director</strong>
-                <span className="film-card__details-value">Wes Anderson</span>
+                <span className="film-card__details-value">{director}</span>
               </p>
               <p className="film-card__details-item">
                 <strong className="film-card__details-name">Starring</strong>
@@ -68,15 +77,15 @@ function FilmScreen({film}: FilmCardProps): JSX.Element {
             <div className="film-card__text-col">
               <p className="film-card__details-item">
                 <strong className="film-card__details-name">Run Time</strong>
-                <span className="film-card__details-value">1h 39m</span>
+                <span className="film-card__details-value">{hours}h {minutes}m</span>
               </p>
               <p className="film-card__details-item">
                 <strong className="film-card__details-name">Genre</strong>
-                <span className="film-card__details-value">Comedy</span>
+                <span className="film-card__details-value">{genre}</span>
               </p>
               <p className="film-card__details-item">
                 <strong className="film-card__details-name">Released</strong>
-                <span className="film-card__details-value">2014</span>
+                <span className="film-card__details-value">{released}</span>
               </p>
             </div>
           </div>
@@ -85,84 +94,37 @@ function FilmScreen({film}: FilmCardProps): JSX.Element {
         return (
           <div className="film-card__reviews film-card__row">
             <div className="film-card__reviews-col">
-              <div className="review">
-                <blockquote className="review__quote">
-                  <p className="review__text">Discerning travellers and Wes Anderson fans will luxuriate in the glorious Mittel-European kitsch of one of the directors funniest and most exquisitely designed films in years.</p>
-
-                  <footer className="review__details">
-                    <cite className="review__author">Kate Muir</cite>
-                    <time className="review__date" dateTime="2016-12-24">December 24, 2016</time>
-                  </footer>
-                </blockquote>
-
-                <div className="review__rating">8,9</div>
-              </div>
-
-              <div className="review">
-                <blockquote className="review__quote">
-                  <p className="review__text">Andersons films are too precious for some, but for those of us willing to lose ourselves in them, they are a delight. The Grand Budapest Hotel is no different, except that he has added a hint of gravitas to the mix, improving the recipe.</p>
-
-                  <footer className="review__details">
-                    <cite className="review__author">Bill Goodykoontz</cite>
-                    <time className="review__date" dateTime="2015-11-18">November 18, 2015</time>
-                  </footer>
-                </blockquote>
-
-                <div className="review__rating">8,0</div>
-              </div>
-
-              <div className="review">
-                <blockquote className="review__quote">
-                  <p className="review__text">I did not find it amusing, and while I can appreciate the creativity, it is an hour and 40 minutes I wish I could take back.</p>
-
-                  <footer className="review__details">
-                    <cite className="review__author">Amanda Greever</cite>
-                    <time className="review__date" dateTime="2015-11-18">November 18, 2015</time>
-                  </footer>
-                </blockquote>
-
-                <div className="review__rating">8,0</div>
-              </div>
+              {firstHalfReviews.map((review) => (
+                <div className="review" key={review.id}>
+                  <blockquote className="review__quote">
+                    <p className="review__text">{review.comment}</p>
+                    <footer className="review__details">
+                      <cite className="review__author">{review.user}</cite>
+                      <time className="review__date" dateTime={new Date(review.date).toISOString()}>
+                        {new Date(review.date).toLocaleDateString()}
+                      </time>
+                    </footer>
+                  </blockquote>
+                  <div className="review__rating">{review.rating}</div>
+                </div>
+              ))}
             </div>
+
             <div className="film-card__reviews-col">
-              <div className="review">
-                <blockquote className="review__quote">
-                  <p className="review__text">The mannered, madcap proceedings are often delightful, occasionally silly, and here and there, gruesome and/or heartbreaking.</p>
-
-                  <footer className="review__details">
-                    <cite className="review__author">Matthew Lickona</cite>
-                    <time className="review__date" dateTime="2016-12-20">December 20, 2016</time>
-                  </footer>
-                </blockquote>
-
-                <div className="review__rating">7,2</div>
-              </div>
-
-              <div className="review">
-                <blockquote className="review__quote">
-                  <p className="review__text">It is certainly a magical and childlike way of storytelling, even if the content is a little more adult.</p>
-
-                  <footer className="review__details">
-                    <cite className="review__author">Paula Fleri-Soler</cite>
-                    <time className="review__date" dateTime="2016-12-20">December 20, 2016</time>
-                  </footer>
-                </blockquote>
-
-                <div className="review__rating">7,6</div>
-              </div>
-
-              <div className="review">
-                <blockquote className="review__quote">
-                  <p className="review__text">It is certainly a magical and childlike way of storytelling, even if the content is a little more adult.</p>
-
-                  <footer className="review__details">
-                    <cite className="review__author">Paula Fleri-Soler</cite>
-                    <time className="review__date" dateTime="2016-12-20">December 20, 2016</time>
-                  </footer>
-                </blockquote>
-
-                <div className="review__rating">7,0</div>
-              </div>
+              {secondHalfReviews.map((review) => (
+                <div className="review" key={review.id}>
+                  <blockquote className="review__quote">
+                    <p className="review__text">{review.comment}</p>
+                    <footer className="review__details">
+                      <cite className="review__author">{review.user}</cite>
+                      <time className="review__date" dateTime={new Date(review.date).toISOString()}>
+                        {new Date(review.date).toLocaleDateString()}
+                      </time>
+                    </footer>
+                  </blockquote>
+                  <div className="review__rating">{review.rating}</div>
+                </div>
+              ))}
             </div>
           </div>
         );
