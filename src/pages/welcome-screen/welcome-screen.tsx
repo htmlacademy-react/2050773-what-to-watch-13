@@ -8,7 +8,7 @@ type WelcomeScreenProps = {
   films: TFilms[];
 }
 
-function WelcomeScreen({ films}: WelcomeScreenProps): JSX.Element {
+function WelcomeScreen({films}: WelcomeScreenProps): JSX.Element {
 
   return(
     <>

@@ -17,9 +17,11 @@ type AppScreenProps = {
   reviews: TReview[];
 }
 
-const authorizationStatus = AuthorizationStatus.Auth;
+const authorizationStatus = AuthorizationStatus.NoAuth;
 
 function App({ films, reviews }: AppScreenProps): JSX.Element {
+  const recommendedFilms = films.slice(-4);
+
   return(
     <HelmetProvider>
       <BrowserRouter>
@@ -38,7 +40,7 @@ function App({ films, reviews }: AppScreenProps): JSX.Element {
           />
           <Route
             path={AppRoute.Film}
-            element={<FilmScreen film={films[5]} reviews={reviews} />}
+            element={<FilmScreen film={films[5]} reviews={reviews} films={recommendedFilms} />}
           />
           <Route
             path={AppRoute.MyList}
