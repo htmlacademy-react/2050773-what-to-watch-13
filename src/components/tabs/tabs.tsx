@@ -1,5 +1,6 @@
 import { TTab } from '../../types/tabs';
 
+
 type TabsProps = {
   activeTab: TTab;
   onTabClick: (tab: TTab) => void;
@@ -7,6 +8,7 @@ type TabsProps = {
 
 
 function Tabs({activeTab, onTabClick}: TabsProps): JSX.Element {
+
   return(
     <nav className="film-nav film-card__nav">
       <ul className="film-nav__list">

@@ -1,5 +1,3 @@
-export const FILMCARDS_COUNT = 20;
-
 export enum AppRoute {
   Root = '/',
   MyList = '/mylist',
@@ -14,3 +12,5 @@ export enum AuthorizationStatus {
   NoAuth = 'NO_AUTH',
   Unknown = 'UNKNOWN'
 }
+
+export const TABS = ['Overview', 'Details', 'Reviews'];

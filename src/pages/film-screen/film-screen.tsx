@@ -4,8 +4,9 @@ import { TFilms } from '../../types/films';
 import Footer from '../../components/footer/footer';
 import Tabs from '../../components/tabs/tabs';
 import { TTab } from '../../types/tabs';
-import { useState } from 'react';
 import { TReview } from '../../types/review';
+import { useSearchParams } from 'react-router-dom';
+import { TABS } from '../../const';
 
 
 type FilmCardProps = {
@@ -23,10 +24,11 @@ function FilmScreen({film, reviews}: FilmCardProps): JSX.Element {
   const firstHalfReviews = reviews.slice(0, Math.ceil(reviews.length / 2));
   const secondHalfReviews = reviews.slice(Math.ceil(reviews.length / 2));
 
-  const [activeTab, setActiveTab] = useState<TTab>('Overview');
+  const [searchParams, setSearchParams] = useSearchParams();
+  const activeTab = searchParams.get('tab') || TABS[0];
 
   const handleTabClick = (tab: TTab) => {
-    setActiveTab(tab);
+    setSearchParams({ tab });
   };
 
   const renderActiveTabFilmInfo = () => {
@@ -182,7 +184,6 @@ function FilmScreen({film, reviews}: FilmCardProps): JSX.Element {
             <div className="film-card__desc">
               <Tabs activeTab={activeTab} onTabClick={handleTabClick} />
               {renderActiveTabFilmInfo()}
-
             </div>
           </div>
         </div>
