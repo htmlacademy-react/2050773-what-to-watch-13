@@ -16,123 +16,13 @@ type FilmCardProps = {
 
 
 function FilmScreen({film, reviews}: FilmCardProps): JSX.Element {
-  const { name, description, director, rating, scoresCount, starring, genre, released, runTime } = film;
-  const formattedStarring = starring.join(', ');
-  const hours = Math.floor(runTime / 60);
-  const minutes = runTime % 60;
-
-  const firstHalfReviews = reviews.slice(0, Math.ceil(reviews.length / 2));
-  const secondHalfReviews = reviews.slice(Math.ceil(reviews.length / 2));
+  const { name, genre, released } = film;
 
   const [searchParams, setSearchParams] = useSearchParams();
-  const activeTab = searchParams.get('tab') || TABS[0];
+  const activeTab = searchParams.get('tab') || TABS.OVERVIEW;
 
   const handleTabClick = (tab: TTab) => {
     setSearchParams({ tab });
-  };
-
-  const renderActiveTabFilmInfo = () => {
-    switch(activeTab) {
-      case 'Overview':
-        return (
-          <>
-            <div className="film-rating">
-              <div className="film-rating__score">{rating}</div>
-              <p className="film-rating__meta">
-                <span className="film-rating__level">Very good</span>
-                <span className="film-rating__count">{scoresCount} ratings</span>
-              </p>
-            </div>
-            <div className="film-card__text">
-              <p>{description}</p>
-              <p className="film-card__director"><strong>Director: {director}</strong></p>
-              <p className="film-card__starring"><strong>Starring: {formattedStarring}, and other</strong></p>
-            </div>
-          </>
-        );
-      case 'Details':
-        return (
-          <div className="film-card__text film-card__row">
-            <div className="film-card__text-col">
-              <p className="film-card__details-item">
-                <strong className="film-card__details-name">Director</strong>
-                <span className="film-card__details-value">{director}</span>
-              </p>
-              <p className="film-card__details-item">
-                <strong className="film-card__details-name">Starring</strong>
-                <span className="film-card__details-value">
-                    Bill Murray, <br/>
-                    Edward Norton, <br/>
-                    Jude Law, <br/>
-                    Willem Dafoe, <br/>
-                    Saoirse Ronan, <br/>
-                    Tony Revoloru, <br/>
-                    Tilda Swinton, <br/>
-                    Tom Wilkinson, <br/>
-                    Owen Wilkinson, <br/>
-                    Adrien Brody, <br/>
-                    Ralph Fiennes, <br/>
-                    Jeff Goldblum
-                </span>
-              </p>
-            </div>
-            <div className="film-card__text-col">
-              <p className="film-card__details-item">
-                <strong className="film-card__details-name">Run Time</strong>
-                <span className="film-card__details-value">{hours}h {minutes}m</span>
-              </p>
-              <p className="film-card__details-item">
-                <strong className="film-card__details-name">Genre</strong>
-                <span className="film-card__details-value">{genre}</span>
-              </p>
-              <p className="film-card__details-item">
-                <strong className="film-card__details-name">Released</strong>
-                <span className="film-card__details-value">{released}</span>
-              </p>
-            </div>
-          </div>
-        );
-      case 'Reviews':
-        return (
-          <div className="film-card__reviews film-card__row">
-            <div className="film-card__reviews-col">
-              {firstHalfReviews.map((review) => (
-                <div className="review" key={review.id}>
-                  <blockquote className="review__quote">
-                    <p className="review__text">{review.comment}</p>
-                    <footer className="review__details">
-                      <cite className="review__author">{review.user}</cite>
-                      <time className="review__date" dateTime={new Date(review.date).toISOString()}>
-                        {new Date(review.date).toLocaleDateString()}
-                      </time>
-                    </footer>
-                  </blockquote>
-                  <div className="review__rating">{review.rating}</div>
-                </div>
-              ))}
-            </div>
-
-            <div className="film-card__reviews-col">
-              {secondHalfReviews.map((review) => (
-                <div className="review" key={review.id}>
-                  <blockquote className="review__quote">
-                    <p className="review__text">{review.comment}</p>
-                    <footer className="review__details">
-                      <cite className="review__author">{review.user}</cite>
-                      <time className="review__date" dateTime={new Date(review.date).toISOString()}>
-                        {new Date(review.date).toLocaleDateString()}
-                      </time>
-                    </footer>
-                  </blockquote>
-                  <div className="review__rating">{review.rating}</div>
-                </div>
-              ))}
-            </div>
-          </div>
-        );
-      default:
-        return null;
-    }
   };
 
 
@@ -145,7 +35,6 @@ function FilmScreen({film, reviews}: FilmCardProps): JSX.Element {
         <div className="film-card__hero">
 
           <Header backgroundImage="img/bg-the-grand-budapest-hotel.jpg" />
-
 
           <div className="film-card__wrap">
             <div className="film-card__desc">
@@ -182,9 +71,9 @@ function FilmScreen({film, reviews}: FilmCardProps): JSX.Element {
             </div>
 
             <div className="film-card__desc">
-              <Tabs activeTab={activeTab} onTabClick={handleTabClick} />
-              {renderActiveTabFilmInfo()}
+              <Tabs activeTab={activeTab} onTabClick={handleTabClick} film={film} reviews={reviews} />
             </div>
+
           </div>
         </div>
       </section>
