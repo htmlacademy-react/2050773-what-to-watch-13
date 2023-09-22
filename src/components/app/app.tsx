@@ -15,12 +15,13 @@ import { TReview } from '../../types/review';
 type AppScreenProps = {
   films: TFilms[];
   reviews: TReview[];
+  genres: string[];
 }
 
 const authorizationStatus = AuthorizationStatus.NoAuth;
 
-function App({ films, reviews }: AppScreenProps): JSX.Element {
-  const recommendedFilms = films.slice(-4);
+function App({ films, reviews, genres }: AppScreenProps): JSX.Element {
+  const recommendedFilms = films.slice(-4); //временный вариант
 
   return(
     <HelmetProvider>
@@ -28,7 +29,7 @@ function App({ films, reviews }: AppScreenProps): JSX.Element {
         <Routes>
           <Route
             path={AppRoute.Root}
-            element={<WelcomeScreen films={films} />}
+            element={<WelcomeScreen genres={genres} films={films} />}
           />
           <Route
             path={AppRoute.SignIn}

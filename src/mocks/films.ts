@@ -16,7 +16,7 @@ export const films: TFilms[] = [
       'Bill Murray'
     ],
     'runTime': 99,
-    'genre': 'Comedy',
+    'genre': 'Comedies',
     'released': 2014,
     'isFavorite': false
   },
@@ -35,7 +35,7 @@ export const films: TFilms[] = [
       'Jared Gilman', 'Kara Hayward'
     ],
     'runTime': 93,
-    'genre': 'Adventure',
+    'genre': 'Sci-Fi',
     'released': 2012,
     'isFavorite': false
   },
@@ -54,7 +54,7 @@ export const films: TFilms[] = [
       'Jim Carrey', 'Kate Winslet'
     ],
     'runTime': 108,
-    'genre': 'Drama',
+    'genre': 'Dramas',
     'released': 2004,
     'isFavorite': true
   },
@@ -73,7 +73,7 @@ export const films: TFilms[] = [
       'Jason Schwartzman', 'Bill Murray'
     ],
     'runTime': 93,
-    'genre': 'Comedy',
+    'genre': 'Comedies',
     'released': 1998,
     'isFavorite': true
   },
@@ -92,7 +92,7 @@ export const films: TFilms[] = [
       'Bill Murray', 'Owen Wilson'
     ],
     'runTime': 119,
-    'genre': 'Adventure',
+    'genre': 'Dramas',
     'released': 2004,
     'isFavorite': false
   },
@@ -111,7 +111,7 @@ export const films: TFilms[] = [
       'George Clooney', 'Meryl Streep'
     ],
     'runTime': 87,
-    'genre': 'Animation',
+    'genre': 'Horror',
     'released': 2009,
     'isFavorite': true
   },
@@ -130,7 +130,7 @@ export const films: TFilms[] = [
       'Bryan Cranston', 'Edward Norton'
     ],
     'runTime': 101,
-    'genre': 'Animation',
+    'genre': 'Crime',
     'released': 2018,
     'isFavorite': false
   },
@@ -149,7 +149,7 @@ export const films: TFilms[] = [
       'Owen Wilson', 'Adrien Brody'
     ],
     'runTime': 91,
-    'genre': 'Adventure',
+    'genre': 'Documentary',
     'released': 2007,
     'isFavorite': false
   }

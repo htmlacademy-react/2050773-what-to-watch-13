@@ -18,3 +18,5 @@ export enum TABS {
   DETAILS = 'Details',
   REVIEWS = 'Reviews'
 }
+
+export const GENRES = ['All genres', 'Comedies', 'Crime', 'Documentary', 'Dramas', 'Horror', 'Kids & Family', 'Romance', 'Sci-Fi', 'Thrillers'];
