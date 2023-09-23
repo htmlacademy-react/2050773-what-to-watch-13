@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 import { useAppDispatch, useAppSelector } from '../../hooks/index';
-import { changeGenre, fillFilmsList } from '../../store/action';
+import { changeGenre, fillFilmsList, resetDisplayFilmsCount } from '../../store/action';
 import { TFilms } from '../../types/films';
 
 type GenresListProps = {
@@ -11,9 +11,10 @@ type GenresListProps = {
 function GenresList({genres, films}: GenresListProps): JSX.Element {
   const dispatch = useAppDispatch();
 
-  const handleGenreCheck = (genre: string) => {
+  const handleGenreChange = (genre: string) => {
     dispatch(changeGenre({genre}));
     dispatch(fillFilmsList({films}));
+    dispatch(resetDisplayFilmsCount()); //сбрасывает счетчик до 8 каждый раз когда меняю жанр
   };
 
   const activeGenre = useAppSelector((state) => state.genre);
@@ -31,7 +32,7 @@ function GenresList({genres, films}: GenresListProps): JSX.Element {
             className="catalog__genres-link"
             onClick={(evt) => {
               evt.preventDefault();
-              handleGenreCheck(genre);
+              handleGenreChange(genre);
             }}
           >
             {genre}

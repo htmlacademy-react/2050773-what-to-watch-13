@@ -116,7 +116,7 @@ export const films: TFilms[] = [
     'isFavorite': true
   },
   {
-    'id': 'gga999h9-hhg8-5ij8-bbh8-90g067866i2i',
+    'id': 'gga999h9-hhg8-5ij8-bbh8-5678',
     'name': 'Isle of Dogs',
     'posterImage': 'https://url-to-image/dogs.jpg',
     'backgroundImage': 'https://url-to-image/dogs-bg.jpg',
@@ -136,6 +136,272 @@ export const films: TFilms[] = [
   },
   {
     'id': 'hhb1010i0-iih9-6jk9-ccb9-01h078866j3j',
+    'name': 'The Darjeeling Limited',
+    'posterImage': 'https://url-to-image/darjeeling.jpg',
+    'backgroundImage': 'https://url-to-image/darjeeling-bg.jpg',
+    'backgroundColor': '#deb887',
+    'videoLink': 'https://url-to-video/darjeeling-video.mp4',
+    'description': 'Three brothers tour India by train in an attempt to bond with each other after the death of their father.',
+    'rating': 7.2,
+    'scoresCount': 230,
+    'director': 'Wes Anderson',
+    'starring': [
+      'Owen Wilson', 'Adrien Brody'
+    ],
+    'runTime': 91,
+    'genre': 'Documentary',
+    'released': 2007,
+    'isFavorite': false
+  },
+  {
+    'id': 'gga999h9-hhg8-5ij8-bbh8-90g0667866i2i',
+    'name': 'Isle of Dogs',
+    'posterImage': 'https://url-to-image/dogs.jpg',
+    'backgroundImage': 'https://url-to-image/dogs-bg.jpg',
+    'backgroundColor': '#ff4500',
+    'videoLink': 'https://url-to-video/dogs-video.mp4',
+    'description': 'Set in Japan, a boy searches for his lost dog with the help of a pack of misfit canines.',
+    'rating': 7.9,
+    'scoresCount': 280,
+    'director': 'Wes Anderson',
+    'starring': [
+      'Bryan Cranston', 'Edward Norton'
+    ],
+    'runTime': 101,
+    'genre': 'Crime',
+    'released': 2018,
+    'isFavorite': false
+  },
+  {
+    'id': 'hhb1010i0-iih9-6jk9-ccb9-6601h078uiu866j3j666',
+    'name': 'The Darjeeling Limited',
+    'posterImage': 'https://url-to-image/darjeeling.jpg',
+    'backgroundImage': 'https://url-to-image/darjeeling-bg.jpg',
+    'backgroundColor': '#deb887',
+    'videoLink': 'https://url-to-video/darjeeling-video.mp4',
+    'description': 'Three brothers tour India by train in an attempt to bond with each other after the death of their father.',
+    'rating': 7.2,
+    'scoresCount': 230,
+    'director': 'Wes Anderson',
+    'starring': [
+      'Owen Wilson', 'Adrien Brody'
+    ],
+    'runTime': 91,
+    'genre': 'Documentary',
+    'released': 2007,
+    'isFavorite': false
+  },
+  {
+    'id': 'gga999h9-hhg8-5ij8-bbh8-90g067866i2i',
+    'name': 'Isle of Dogs',
+    'posterImage': 'https://url-to-image/dogs.jpg',
+    'backgroundImage': 'https://url-to-image/dogs-bg.jpg',
+    'backgroundColor': '#ff4500',
+    'videoLink': 'https://url-to-video/dogs-video.mp4',
+    'description': 'Set in Japan, a boy searches for his lost dog with the help of a pack of misfit canines.',
+    'rating': 7.9,
+    'scoresCount': 280,
+    'director': 'Wes Anderson',
+    'starring': [
+      'Bryan Cranston', 'Edward Norton'
+    ],
+    'runTime': 101,
+    'genre': 'Crime',
+    'released': 2018,
+    'isFavorite': false
+  },
+  {
+    'id': 'hhb1010i0-iih9-6jk9-ccb9-01h078867776j3j',
+    'name': 'The Darjeeling Limited',
+    'posterImage': 'https://url-to-image/darjeeling.jpg',
+    'backgroundImage': 'https://url-to-image/darjeeling-bg.jpg',
+    'backgroundColor': '#deb887',
+    'videoLink': 'https://url-to-video/darjeeling-video.mp4',
+    'description': 'Three brothers tour India by train in an attempt to bond with each other after the death of their father.',
+    'rating': 7.2,
+    'scoresCount': 230,
+    'director': 'Wes Anderson',
+    'starring': [
+      'Owen Wilson', 'Adrien Brody'
+    ],
+    'runTime': 91,
+    'genre': 'Documentary',
+    'released': 2007,
+    'isFavorite': false
+  },
+  {
+    'id': 'hhb1010i0-iih9-6jk9-ccb9-01h07j3j',
+    'name': 'The Darjeeling Limited',
+    'posterImage': 'https://url-to-image/darjeeling.jpg',
+    'backgroundImage': 'https://url-to-image/darjeeling-bg.jpg',
+    'backgroundColor': '#deb887',
+    'videoLink': 'https://url-to-video/darjeeling-video.mp4',
+    'description': 'Three brothers tour India by train in an attempt to bond with each other after the death of their father.',
+    'rating': 7.2,
+    'scoresCount': 230,
+    'director': 'Wes Anderson',
+    'starring': [
+      'Owen Wilson', 'Adrien Brody'
+    ],
+    'runTime': 91,
+    'genre': 'Documentary',
+    'released': 2007,
+    'isFavorite': false
+  },
+  {
+    'id': 'hhb1010i0-iih9-6jk9-ccb9-01h078866jj',
+    'name': 'The Darjeeling Limited',
+    'posterImage': 'https://url-to-image/darjeeling.jpg',
+    'backgroundImage': 'https://url-to-image/darjeeling-bg.jpg',
+    'backgroundColor': '#deb887',
+    'videoLink': 'https://url-to-video/darjeeling-video.mp4',
+    'description': 'Three brothers tour India by train in an attempt to bond with each other after the death of their father.',
+    'rating': 7.2,
+    'scoresCount': 230,
+    'director': 'Wes Anderson',
+    'starring': [
+      'Owen Wilson', 'Adrien Brody'
+    ],
+    'runTime': 91,
+    'genre': 'Documentary',
+    'released': 2007,
+    'isFavorite': false
+  },
+  {
+    'id': 'hhb1010i0-iih9-6jk9-ccb9-01hj3j',
+    'name': 'The Darjeeling Limited',
+    'posterImage': 'https://url-to-image/darjeeling.jpg',
+    'backgroundImage': 'https://url-to-image/darjeeling-bg.jpg',
+    'backgroundColor': '#deb887',
+    'videoLink': 'https://url-to-video/darjeeling-video.mp4',
+    'description': 'Three brothers tour India by train in an attempt to bond with each other after the death of their father.',
+    'rating': 7.2,
+    'scoresCount': 230,
+    'director': 'Wes Anderson',
+    'starring': [
+      'Owen Wilson', 'Adrien Brody'
+    ],
+    'runTime': 91,
+    'genre': 'Documentary',
+    'released': 2007,
+    'isFavorite': false
+  },
+  {
+    'id': 'hhb1010i0-iih9-6jk9-ccb9-0',
+    'name': 'The Darjeeling Limited',
+    'posterImage': 'https://url-to-image/darjeeling.jpg',
+    'backgroundImage': 'https://url-to-image/darjeeling-bg.jpg',
+    'backgroundColor': '#deb887',
+    'videoLink': 'https://url-to-video/darjeeling-video.mp4',
+    'description': 'Three brothers tour India by train in an attempt to bond with each other after the death of their father.',
+    'rating': 7.2,
+    'scoresCount': 230,
+    'director': 'Wes Anderson',
+    'starring': [
+      'Owen Wilson', 'Adrien Brody'
+    ],
+    'runTime': 91,
+    'genre': 'Documentary',
+    'released': 2007,
+    'isFavorite': false
+  },
+  {
+    'id': 'hhb1010i0-iih9-6jk9-ccb9-071h078866j3j',
+    'name': 'The Darjeeling Limited',
+    'posterImage': 'https://url-to-image/darjeeling.jpg',
+    'backgroundImage': 'https://url-to-image/darjeeling-bg.jpg',
+    'backgroundColor': '#deb887',
+    'videoLink': 'https://url-to-video/darjeeling-video.mp4',
+    'description': 'Three brothers tour India by train in an attempt to bond with each other after the death of their father.',
+    'rating': 7.2,
+    'scoresCount': 230,
+    'director': 'Wes Anderson',
+    'starring': [
+      'Owen Wilson', 'Adrien Brody'
+    ],
+    'runTime': 91,
+    'genre': 'Documentary',
+    'released': 2007,
+    'isFavorite': false
+  },
+  {
+    'id': 'hhb1010i0-iih9-6jk9-ccb9-01h07866j3j',
+    'name': 'The Darjeeling Limited',
+    'posterImage': 'https://url-to-image/darjeeling.jpg',
+    'backgroundImage': 'https://url-to-image/darjeeling-bg.jpg',
+    'backgroundColor': '#deb887',
+    'videoLink': 'https://url-to-video/darjeeling-video.mp4',
+    'description': 'Three brothers tour India by train in an attempt to bond with each other after the death of their father.',
+    'rating': 7.2,
+    'scoresCount': 230,
+    'director': 'Wes Anderson',
+    'starring': [
+      'Owen Wilson', 'Adrien Brody'
+    ],
+    'runTime': 91,
+    'genre': 'Documentary',
+    'released': 2007,
+    'isFavorite': false
+  },
+  {
+    'id': 'hhb1010i0-iih9-6jk9-ccb9-01h078866j3777j',
+    'name': 'The Darjeeling Limited',
+    'posterImage': 'https://url-to-image/darjeeling.jpg',
+    'backgroundImage': 'https://url-to-image/darjeeling-bg.jpg',
+    'backgroundColor': '#deb887',
+    'videoLink': 'https://url-to-video/darjeeling-video.mp4',
+    'description': 'Three brothers tour India by train in an attempt to bond with each other after the death of their father.',
+    'rating': 7.2,
+    'scoresCount': 230,
+    'director': 'Wes Anderson',
+    'starring': [
+      'Owen Wilson', 'Adrien Brody'
+    ],
+    'runTime': 91,
+    'genre': 'Documentary',
+    'released': 2007,
+    'isFavorite': false
+  },
+  {
+    'id': 'hhb1010i0-iih9-6jk9-ccb9-01h078866jg3j',
+    'name': 'The Darjeeling Limited',
+    'posterImage': 'https://url-to-image/darjeeling.jpg',
+    'backgroundImage': 'https://url-to-image/darjeeling-bg.jpg',
+    'backgroundColor': '#deb887',
+    'videoLink': 'https://url-to-video/darjeeling-video.mp4',
+    'description': 'Three brothers tour India by train in an attempt to bond with each other after the death of their father.',
+    'rating': 7.2,
+    'scoresCount': 230,
+    'director': 'Wes Anderson',
+    'starring': [
+      'Owen Wilson', 'Adrien Brody'
+    ],
+    'runTime': 91,
+    'genre': 'Documentary',
+    'released': 2007,
+    'isFavorite': false
+  },
+  {
+    'id': 'hhb1010i0-iih9-6jk9-ccb9-01h078866jk3j',
+    'name': 'The Darjeeling Limited',
+    'posterImage': 'https://url-to-image/darjeeling.jpg',
+    'backgroundImage': 'https://url-to-image/darjeeling-bg.jpg',
+    'backgroundColor': '#deb887',
+    'videoLink': 'https://url-to-video/darjeeling-video.mp4',
+    'description': 'Three brothers tour India by train in an attempt to bond with each other after the death of their father.',
+    'rating': 7.2,
+    'scoresCount': 230,
+    'director': 'Wes Anderson',
+    'starring': [
+      'Owen Wilson', 'Adrien Brody'
+    ],
+    'runTime': 91,
+    'genre': 'Documentary',
+    'released': 2007,
+    'isFavorite': false
+  },
+  {
+    'id': 'hhb1010i0-iih9-6jk9-ccb9-01h07886jj6j3j',
     'name': 'The Darjeeling Limited',
     'posterImage': 'https://url-to-image/darjeeling.jpg',
     'backgroundImage': 'https://url-to-image/darjeeling-bg.jpg',

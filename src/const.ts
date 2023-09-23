@@ -20,3 +20,5 @@ export enum TABS {
 }
 
 export const GENRES = ['All genres', 'Comedies', 'Crime', 'Documentary', 'Dramas', 'Horror', 'Kids & Family', 'Romance', 'Sci-Fi', 'Thrillers'];
+
+export const DISPLAYED_FILMS_COUNT = 8;
