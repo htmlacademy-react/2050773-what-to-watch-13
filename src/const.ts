@@ -22,3 +22,13 @@ export enum TABS {
 export const GENRES = ['All genres', 'Comedies', 'Crime', 'Documentary', 'Dramas', 'Horror', 'Kids & Family', 'Romance', 'Sci-Fi', 'Thrillers'];
 
 export const DISPLAYED_FILMS_COUNT = 8;
+
+export enum APIRoute {
+  Films = '/films',
+  Favorite = '/favorite',
+  Promo = '/promo',
+  Login = '/login',
+  Logout = '/logout',
+}
+
+export const TIMEOUT_SHOW_ERROR = 2000;

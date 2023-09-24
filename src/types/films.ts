@@ -1,4 +1,4 @@
-export type TFilms = {
+export type TFilm = {
   id: string;
   name: string;
   posterImage: string;
@@ -15,3 +15,5 @@ export type TFilms = {
   released: number;
   isFavorite: boolean;
 };
+
+export type TFilms = TFilm[];

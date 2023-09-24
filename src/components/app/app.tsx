@@ -9,19 +9,23 @@ import MyListScreen from '../../pages/my-list-screen/my-list-screen';
 import AddReviewScreen from '../../pages/add-review-screen/add-review-screen';
 import NotFoundScreen from '../../pages/not-found-screen/not-found-screen';
 import PrivateRoute from '../private-route/private-route';
-import { TFilms } from '../../types/films';
+// import { TFilms } from '../../types/films';
 import { TReview } from '../../types/review';
+import { useAppSelector } from '../../hooks/index';
 
 type AppScreenProps = {
-  films: TFilms[];
+  // films: TFilms[];
   reviews: TReview[];
   genres: string[];
 }
 
 const authorizationStatus = AuthorizationStatus.NoAuth;
 
-function App({ films, reviews, genres }: AppScreenProps): JSX.Element {
+function App({ reviews, genres }: AppScreenProps): JSX.Element {
+  const films = useAppSelector((state) => state.films);
   const recommendedFilms = films.slice(-4); //временный вариант
+
+  console.log(films);
 
   return(
     <HelmetProvider>
