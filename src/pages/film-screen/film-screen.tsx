@@ -1,6 +1,6 @@
 import Header from '../../components/header/header';
 import { Helmet } from 'react-helmet-async';
-import { TFilms } from '../../types/films';
+import { TFilm, TFilms } from '../../types/films';
 import Footer from '../../components/footer/footer';
 import Tabs from '../../components/tabs/tabs';
 import { TTab } from '../../types/tabs';
@@ -11,9 +11,9 @@ import FilmCardsList from '../../components/film-cards-list/film-cards-list';
 
 
 type FilmCardProps = {
-  film: TFilms;
+  film: TFilm;
   reviews: TReview[];
-  films: TFilms[];
+  films: TFilms;
 };
 
 

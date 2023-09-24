@@ -4,7 +4,7 @@ import { TFilms } from '../../types/films';
 import Footer from '../../components/footer/footer';
 
 type MyListScreenPorops = {
-  films: TFilms[];
+  films: TFilms;
 }
 
 function MyListScreen({films}: MyListScreenPorops): JSX.Element {

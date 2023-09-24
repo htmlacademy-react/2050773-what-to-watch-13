@@ -12,6 +12,7 @@ import PrivateRoute from '../private-route/private-route';
 // import { TFilms } from '../../types/films';
 import { TReview } from '../../types/review';
 import { useAppSelector } from '../../hooks/index';
+import LoadingScreen from '../../pages/loading-screen/loading-screen';
 
 type AppScreenProps = {
   // films: TFilms[];
@@ -19,13 +20,21 @@ type AppScreenProps = {
   genres: string[];
 }
 
-const authorizationStatus = AuthorizationStatus.NoAuth;
 
 function App({ reviews, genres }: AppScreenProps): JSX.Element {
+  const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
+  const isFilmsDataLoading = useAppSelector((state) => state.isFilmsDataLoading);
   const films = useAppSelector((state) => state.films);
+
+
+  if (authorizationStatus === AuthorizationStatus.Unknown || isFilmsDataLoading) {
+    return (
+      <LoadingScreen />
+    );
+  }
+
   const recommendedFilms = films.slice(-4); //временный вариант
 
-  console.log(films);
 
   return(
     <HelmetProvider>
@@ -33,7 +42,7 @@ function App({ reviews, genres }: AppScreenProps): JSX.Element {
         <Routes>
           <Route
             path={AppRoute.Root}
-            element={<WelcomeScreen genres={genres} films={films} />}
+            element={<WelcomeScreen genres={genres} filmsSmallCards={films} />}
           />
           <Route
             path={AppRoute.SignIn}

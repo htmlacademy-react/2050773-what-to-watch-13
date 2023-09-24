@@ -1,13 +1,15 @@
-import { TFilms } from '../../types/films';
+import { TFilmSmallCards } from '../../types/films';
 import FilmCard from '../film-card/film-card';
 import { useState } from 'react';
 
+
 type FilmCardsListProps = {
-  films: TFilms[];
+  films: TFilmSmallCards;
 };
 
 function FilmCardsList({films}: FilmCardsListProps): JSX.Element {
-  const [activeCard, setActiveCard] = useState<TFilms | null>(null);
+
+  const [activeCard, setActiveCard] = useState<TFilmSmallCards | null>(null);
 
   return(
     <div className="catalog__films-list">

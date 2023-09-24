@@ -32,3 +32,14 @@ export enum APIRoute {
 }
 
 export const TIMEOUT_SHOW_ERROR = 2000;
+
+export const BACKEND_URL = 'https://13.design.pages.academy/wtw';
+
+export const REQUEST_TIMEOUT = 5000;
+
+export enum GenresNamespace {
+  Comedies = 'Comedy',
+  Crime = 'Crime',
+  Dramas = 'Drama',
+  Thrillers = 'Thriller',
+}

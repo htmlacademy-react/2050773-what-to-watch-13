@@ -1,3 +1,13 @@
+export type TFilmSmallCard = {
+  id: string;
+  name: string;
+  previewImage: string;
+  previewVideoLink: string;
+  genre: string;
+}
+
+export type TFilmSmallCards = TFilmSmallCard[];
+
 export type TFilm = {
   id: string;
   name: string;

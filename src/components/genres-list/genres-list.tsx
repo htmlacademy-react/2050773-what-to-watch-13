@@ -1,11 +1,11 @@
 import classNames from 'classnames';
 import { useAppDispatch, useAppSelector } from '../../hooks/index';
 import { changeGenre, fillFilmsList, resetDisplayFilmsCount } from '../../store/action';
-import { TFilms } from '../../types/films';
+import { TFilmSmallCards} from '../../types/films';
 
 type GenresListProps = {
   genres: string[];
-  films: TFilms[];
+  films: TFilmSmallCards;
 }
 
 function GenresList({genres, films}: GenresListProps): JSX.Element {
@@ -18,7 +18,6 @@ function GenresList({genres, films}: GenresListProps): JSX.Element {
   };
 
   const activeGenre = useAppSelector((state) => state.genre);
-  // console.log(activeGenre);
 
   return (
     <ul className="catalog__genres-list">

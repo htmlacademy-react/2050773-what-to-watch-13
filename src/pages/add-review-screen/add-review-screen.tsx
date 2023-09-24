@@ -1,10 +1,10 @@
 import Header from '../../components/header/header';
 import {Helmet} from 'react-helmet-async';
-import { TFilms } from '../../types/films';
+import { TFilm } from '../../types/films';
 import AddReview from '../../components/add-review/add-review';
 
 type PlayerProps = {
-  film: TFilms;
+  film: TFilm;
 }
 
 function AddReviewScreen({film}: PlayerProps): JSX.Element {

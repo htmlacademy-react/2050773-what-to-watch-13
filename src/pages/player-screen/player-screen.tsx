@@ -1,8 +1,8 @@
 import { Helmet } from 'react-helmet-async';
-import { TFilms } from '../../types/films';
+import { TFilm } from '../../types/films';
 
 type PlayerProps = {
-  film: TFilms;
+  film: TFilm;
 }
 
 function PlayerScreen({film}: PlayerProps): JSX.Element {
