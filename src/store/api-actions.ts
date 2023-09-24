@@ -42,7 +42,6 @@ export const fetchFilmByIdAction = createAsyncThunk<void, string, {
   async (filmId, { dispatch, extra: api }) => {
     try {
       const { data } = await api.get<TFilm>(`${APIRoute.Films}/${filmId}`);
-
       dispatch(loadFilmById({ film: data }));
     } catch (error) {
       // console.error('Error fetching film by ID:', error);
