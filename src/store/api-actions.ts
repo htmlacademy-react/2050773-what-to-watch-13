@@ -42,11 +42,10 @@ export const fetchFilmByIdAction = createAsyncThunk<void, string, {
   async (filmId, { dispatch, extra: api }) => {
     try {
       const { data } = await api.get<TFilm>(`${APIRoute.Films}/${filmId}`);
-      console.log('data');
 
       dispatch(loadFilmById({ film: data }));
     } catch (error) {
-      console.error('Error fetching film by ID:', error);
+      // console.error('Error fetching film by ID:', error);
       dispatch(setError('Failed to fetch the film by its ID.'));
     }
   },
@@ -94,4 +93,3 @@ export const logoutAction = createAsyncThunk<void, undefined, {
     dispatch(requireAuthorization(AuthorizationStatus.NoAuth));
   },
 );
-
