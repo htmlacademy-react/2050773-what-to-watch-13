@@ -1,4 +1,4 @@
-import {Route, BrowserRouter, Routes} from 'react-router-dom';
+import {Route, Routes} from 'react-router-dom';
 import {HelmetProvider} from 'react-helmet-async';
 import { AppRoute, AuthorizationStatus } from '../../const';
 import WelcomeScreen from '../../pages/welcome-screen/welcome-screen';
@@ -13,6 +13,8 @@ import PrivateRoute from '../private-route/private-route';
 import { TReview } from '../../types/review';
 import { useAppSelector } from '../../hooks/index';
 import LoadingScreen from '../../pages/loading-screen/loading-screen';
+import HistoryRouter from '../history-route/history-route';
+import browserHistory from '../../browser-history';
 
 type AppScreenProps = {
   // films: TFilms[];
@@ -26,7 +28,6 @@ function App({ reviews, genres }: AppScreenProps): JSX.Element {
   const isFilmsDataLoading = useAppSelector((state) => state.isFilmsDataLoading);
   const films = useAppSelector((state) => state.films);
 
-
   if (authorizationStatus === AuthorizationStatus.Unknown || isFilmsDataLoading) {
     return (
       <LoadingScreen />
@@ -38,7 +39,7 @@ function App({ reviews, genres }: AppScreenProps): JSX.Element {
 
   return(
     <HelmetProvider>
-      <BrowserRouter>
+      <HistoryRouter history={browserHistory}>
         <Routes>
           <Route
             path={AppRoute.Root}
@@ -59,7 +60,7 @@ function App({ reviews, genres }: AppScreenProps): JSX.Element {
           <Route
             path={AppRoute.MyList}
             element={
-              <PrivateRoute authorizationStatus={authorizationStatus}>
+              <PrivateRoute>
                 <MyListScreen films={films} />
               </PrivateRoute>
             }
@@ -67,7 +68,7 @@ function App({ reviews, genres }: AppScreenProps): JSX.Element {
           <Route
             path={AppRoute.AddReview}
             element={
-              <PrivateRoute authorizationStatus={authorizationStatus}>
+              <PrivateRoute>
                 <AddReviewScreen film={films[3]} />
               </PrivateRoute>
             }
@@ -77,7 +78,7 @@ function App({ reviews, genres }: AppScreenProps): JSX.Element {
             element={<NotFoundScreen />}
           />
         </Routes>
-      </BrowserRouter>
+      </HistoryRouter>
     </HelmetProvider>
 
   );

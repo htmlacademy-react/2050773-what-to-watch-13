@@ -8,16 +8,30 @@ import { TReview } from '../../types/review';
 import { useSearchParams } from 'react-router-dom';
 import { TABS } from '../../const';
 import FilmCardsList from '../../components/film-cards-list/film-cards-list';
-
+import { useParams } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { useAppSelector } from '../../hooks/index';
+import { useEffect } from 'react';
+import { fetchFilmByIdAction } from '../../store/api-actions';
 
 type FilmCardProps = {
-  film: TFilm;
   reviews: TReview[];
   films: TFilms;
 };
 
 
-function FilmScreen({film, reviews, films}: FilmCardProps): JSX.Element {
+function FilmScreen({ reviews, films}: FilmCardProps): JSX.Element {
+  const {id} = useParams();
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (id) {
+      dispatch(fetchFilmByIdAction(id));
+    }
+  }, [id, dispatch]);
+
+  const film = useAppSelector((state) => state.film);
+
   const { name, genre, released } = film;
 
   const [searchParams, setSearchParams] = useSearchParams();

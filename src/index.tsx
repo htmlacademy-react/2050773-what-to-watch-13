@@ -8,8 +8,10 @@ import { GENRES } from './const';
 import ErrorMessage from './components/error-message/error-message';
 import { fetchFilmsAction, checkAuthAction } from './store/api-actions';
 
+
 store.dispatch(fetchFilmsAction());
 store.dispatch(checkAuthAction());
+
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement

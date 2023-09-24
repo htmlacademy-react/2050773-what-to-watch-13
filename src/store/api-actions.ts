@@ -1,13 +1,13 @@
-import {AxiosInstance} from 'axios';
-import {createAsyncThunk} from '@reduxjs/toolkit';
-import {AppDispatch, State} from '../types/state.js';
-import { TFilms } from '../types/films.js';
-import {fillFilmsList, requireAuthorization, setError, setFilmsDataLoadingStatus} from './action';
-import {saveToken, dropToken} from '../services/token';
-import {APIRoute, AuthorizationStatus, TIMEOUT_SHOW_ERROR} from '../const';
-import {AuthData} from '../types/auth-data';
-import {UserData} from '../types/user-data';
-import {store} from './';
+import { AxiosInstance } from 'axios';
+import { createAsyncThunk } from '@reduxjs/toolkit';
+import { AppDispatch, State } from '../types/state.js';
+import { TFilmSmallCards, TFilm } from '../types/films.js';
+import { fillFilmsList, requireAuthorization, setError, setFilmsDataLoadingStatus, loadFilmById, redirectToRoute } from './action';
+import { saveToken, dropToken } from '../services/token';
+import { APIRoute, AppRoute, AuthorizationStatus, TIMEOUT_SHOW_ERROR } from '../const';
+import { AuthData } from '../types/auth-data';
+import { UserData } from '../types/user-data';
+import { store } from './';
 
 export const clearErrorAction = createAsyncThunk(
   'clearError',
@@ -27,9 +27,28 @@ export const fetchFilmsAction = createAsyncThunk<void, undefined, {
   'fetchFilms',
   async (_arg, {dispatch, extra: api}) => {
     dispatch(setFilmsDataLoadingStatus(true));
-    const {data} = await api.get<TFilms>(APIRoute.Films);
+    const {data} = await api.get<TFilmSmallCards>(APIRoute.Films);
     dispatch(setFilmsDataLoadingStatus(false));
     dispatch(fillFilmsList({ films: data }));
+  },
+);
+
+export const fetchFilmByIdAction = createAsyncThunk<void, string, {
+  dispatch: AppDispatch;
+  state: State;
+  extra: AxiosInstance;
+}>(
+  'fetchFilmById',
+  async (filmId, { dispatch, extra: api }) => {
+    try {
+      const { data } = await api.get<TFilm>(`${APIRoute.Films}/${filmId}`);
+      console.log('data');
+
+      dispatch(loadFilmById({ film: data }));
+    } catch (error) {
+      console.error('Error fetching film by ID:', error);
+      dispatch(setError('Failed to fetch the film by its ID.'));
+    }
   },
 );
 
@@ -59,6 +78,7 @@ export const loginAction = createAsyncThunk<void, AuthData, {
     const {data: {token}} = await api.post<UserData>(APIRoute.Login, {email, password});
     saveToken(token);
     dispatch(requireAuthorization(AuthorizationStatus.Auth));
+    dispatch(redirectToRoute(AppRoute.Root));
   },
 );
 

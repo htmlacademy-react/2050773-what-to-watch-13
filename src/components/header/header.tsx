@@ -2,6 +2,9 @@ import { PropsWithChildren } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { AppRoute } from '../../const';
 import { AuthorizationStatus } from '../../const';
+import { useAppSelector } from '../../hooks/index';
+import { useAppDispatch } from '../../hooks/index';
+import { logoutAction } from '../../store/api-actions';
 
 type HeaderSignInProps = {
   isSignInPage: boolean;
@@ -12,9 +15,10 @@ type HeaderProps = {
   backgroundImage?: string;
 };
 
-const authorizationStatus = AuthorizationStatus.Auth;
 
-function HeaderSignAction({isSignInPage, isAuthorized}: HeaderSignInProps): JSX.Element {
+function HeaderSignAction({ isSignInPage, isAuthorized}: HeaderSignInProps): JSX.Element {
+  const dispatch = useAppDispatch();
+
   if(isSignInPage) {
     return (
       <h1 className="page-title user-page__title">Sign in</h1>
@@ -29,7 +33,13 @@ function HeaderSignAction({isSignInPage, isAuthorized}: HeaderSignInProps): JSX.
         </div>
       </li>
       <li className="user-block__item">
-        <a className="user-block__link">Sign out</a>
+        <Link to="/" className="user-block__link"
+          onClick={(evt) => {
+            evt.preventDefault();
+            dispatch(logoutAction());
+          }}
+        >Sign out
+        </Link>
       </li>
     </ul>
   ) : (
@@ -45,6 +55,7 @@ function Header({children, backgroundImage}: PropsWithChildren<HeaderProps>): JS
   const isSignInPage = pathname === AppRoute.SignIn;
   const isFilmPage = pathname.split('/')[1] === AppRoute.Film.split('/')[1];
   const isMyListPage = pathname === AppRoute.MyList;
+  const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
 
   return(
     <>

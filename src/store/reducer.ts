@@ -1,6 +1,6 @@
 import { createReducer } from '@reduxjs/toolkit';
-import { TFilms } from '../types/films';
-import { changeGenre, fillFilmsList, increaseDisplayFilmsCount, resetDisplayFilmsCount, requireAuthorization, setError, setFilmsDataLoadingStatus } from './action';
+import { TFilmSmallCards, TFilm } from '../types/films';
+import { changeGenre, fillFilmsList, increaseDisplayFilmsCount, resetDisplayFilmsCount, requireAuthorization, setError, setFilmsDataLoadingStatus, loadFilmById } from './action';
 import { DISPLAYED_FILMS_COUNT, AuthorizationStatus } from '../const';
 
 
@@ -8,11 +8,12 @@ const DEFAULT_GENRE = 'All genres';
 
 type InitialStateType = {
   genre: string;
-  films: TFilms;
+  films: TFilmSmallCards;
   displayedFilmsCount: number;
   authorizationStatus: AuthorizationStatus;
   error: string | null;
   isFilmsDataLoading: boolean;
+  film: TFilm | null;
 };
 
 const InitialState: InitialStateType = {
@@ -21,7 +22,8 @@ const InitialState: InitialStateType = {
   displayedFilmsCount: DISPLAYED_FILMS_COUNT,
   authorizationStatus: AuthorizationStatus.Unknown,
   error: null,
-  isFilmsDataLoading: false
+  isFilmsDataLoading: false,
+  film: null
 };
 
 const reducer = createReducer(InitialState, (builder) => {
@@ -31,6 +33,9 @@ const reducer = createReducer(InitialState, (builder) => {
     })
     .addCase(fillFilmsList, (state, action) => {
       state.films = action.payload.films;
+    })
+    .addCase(loadFilmById, (state, action) => {
+      state.film = action.payload.film;
     })
     .addCase(setFilmsDataLoadingStatus, (state, action) => {
       state.isFilmsDataLoading = action.payload;
