@@ -34,7 +34,7 @@ function WelcomeScreen({films, genres}: WelcomeScreenProps): JSX.Element {
   const displayedFilmsCount = useAppSelector((state) => state.displayedFilmsCount);
   const filmsShowed = filmsByCurrentGenre.slice(0, displayedFilmsCount);
 
-  // console.log(displayedFilmsCount);
+  // console.log(filmsShowed);
 
   return(
     <>
@@ -78,10 +78,10 @@ function WelcomeScreen({films, genres}: WelcomeScreenProps): JSX.Element {
         </div>
       </section>
       <div className="page-content">
+
         <section className="catalog">
           <h2 className="catalog__title visually-hidden">Catalog</h2>
           <GenresList genres={genres} films={films} />
-
           <FilmCardsList films={filmsShowed} />
         </section>
 
