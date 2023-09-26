@@ -24,7 +24,7 @@ function FilmScreen({ reviews, films}: FilmCardProps): JSX.Element {
   const {id} = useParams();
   const dispatch = useDispatch();
 
-  // console.log(fetchFilmByIdAction(id));
+  console.log(fetchFilmByIdAction(id));
 
 
   useEffect(() => {
