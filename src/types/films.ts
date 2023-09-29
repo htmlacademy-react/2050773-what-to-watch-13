@@ -27,3 +27,14 @@ export type TFilm = {
 };
 
 export type TFilms = TFilm[];
+
+export type TPromo = {
+  id: string;
+  name: string;
+  posterImage:string;
+  backgroundImage: string;
+  videoLink: string;
+  genre: string;
+  released: number;
+  isFavorite: boolean;
+};

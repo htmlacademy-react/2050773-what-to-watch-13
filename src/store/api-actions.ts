@@ -1,8 +1,8 @@
 import { AxiosInstance } from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { AppDispatch, State } from '../types/state.js';
-import { TFilmSmallCards, TFilm } from '../types/films.js';
-import { fillFilmsList, requireAuthorization, setError, setFilmsDataLoadingStatus, loadFilmById, redirectToRoute } from './action';
+import { TFilmSmallCards, TFilm, TPromo } from '../types/films.js';
+import { fillFilmsList, requireAuthorization, setError, setFilmsDataLoadingStatus, loadFilmById, redirectToRoute, setFilmDataLoadingStatus, setPromoFilmDataLoadingStatus, loadPromoFilm } from './action';
 import { saveToken, dropToken } from '../services/token';
 import { APIRoute, AppRoute, AuthorizationStatus, TIMEOUT_SHOW_ERROR } from '../const';
 import { AuthData } from '../types/auth-data';
@@ -42,13 +42,37 @@ export const fetchFilmByIdAction = createAsyncThunk<void, string, {
   async (filmId, { dispatch, extra: api }) => {
     try {
       const { data } = await api.get<TFilm>(`${APIRoute.Films}/${filmId}`);
+      console.log(data);
       dispatch(loadFilmById({ film: data }));
+      dispatch(setFilmDataLoadingStatus(false));
     } catch (error) {
-      // console.error('Error fetching film by ID:', error);
+      console.error("API Error:", error.response ? error.response.data : error.message);
       dispatch(setError('Failed to fetch the film by its ID.'));
     }
   },
 );
+
+export const fetchPromoFilmAction = createAsyncThunk<TPromo, undefined, {
+  dispatch: AppDispatch;
+  state: State;
+  extra: AxiosInstance;
+}>(
+  'fetchPromoFilm',
+  async(_arg, {dispatch, extra: api}) => {
+    try {
+      dispatch(setFilmDataLoadingStatus(true)); // Start loading
+      const {data} = await api.get<TPromo>(APIRoute.Promo);
+      dispatch(loadPromoFilm({ promo: data }));
+      dispatch(setPromoFilmDataLoadingStatus(false)); // End loading
+      return data;
+    } catch (error) {
+      console.error("API Error:", error.response ? error.response.data : error.message);
+      dispatch(setError('Failed to fetch promo film.'));
+      throw error;// This is crucial to tell Redux Toolkit that the async thunk has failed.
+    }
+  }
+);
+
 
 export const checkAuthAction = createAsyncThunk<void, undefined, {
   dispatch: AppDispatch;

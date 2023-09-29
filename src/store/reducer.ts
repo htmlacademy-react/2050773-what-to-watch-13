@@ -1,6 +1,6 @@
 import { createReducer } from '@reduxjs/toolkit';
-import { TFilmSmallCards, TFilm } from '../types/films';
-import { changeGenre, fillFilmsList, increaseDisplayFilmsCount, resetDisplayFilmsCount, requireAuthorization, setError, setFilmsDataLoadingStatus, loadFilmById } from './action';
+import { TFilmSmallCards, TFilm, TPromo } from '../types/films';
+import { changeGenre, fillFilmsList, increaseDisplayFilmsCount, resetDisplayFilmsCount, requireAuthorization, setError, setFilmsDataLoadingStatus, loadFilmById, loadPromoFilm, setFilmDataLoadingStatus, setPromoFilmDataLoadingStatus } from './action';
 import { DISPLAYED_FILMS_COUNT, AuthorizationStatus } from '../const';
 
 
@@ -13,7 +13,10 @@ type InitialStateType = {
   authorizationStatus: AuthorizationStatus;
   error: string | null;
   isFilmsDataLoading: boolean;
+  isFilmDataLoading: boolean;
+  isPromoFilmDataLoading: boolean;
   film: TFilm | null;
+  promo: TPromo | null;
 };
 
 const InitialState: InitialStateType = {
@@ -23,7 +26,10 @@ const InitialState: InitialStateType = {
   authorizationStatus: AuthorizationStatus.Unknown,
   error: null,
   isFilmsDataLoading: false,
-  film: null
+  isFilmDataLoading: true,
+  isPromoFilmDataLoading: true,
+  film: null,
+  promo: null
 };
 
 const reducer = createReducer(InitialState, (builder) => {
@@ -51,6 +57,15 @@ const reducer = createReducer(InitialState, (builder) => {
     })
     .addCase(setError, (state, action) => {
       state.error = action.payload;
+    })
+    .addCase(loadPromoFilm, (state, action) => {
+      state.promo = action.payload.promo;
+    })
+    .addCase(setFilmDataLoadingStatus, (state, action) => {
+      state.isFilmDataLoading = action.payload;
+    })
+    .addCase(setPromoFilmDataLoadingStatus, (state, action) => {
+      state.isPromoFilmDataLoading = action.payload;
     });
 });
 
