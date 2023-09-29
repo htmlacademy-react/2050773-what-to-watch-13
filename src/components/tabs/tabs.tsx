@@ -43,7 +43,7 @@ function Tabs({activeTab, onTabClick, film, reviews}: TabsProps): JSX.Element {
       </nav>
       {activeTab === TABS.OVERVIEW && <Overview film={film} />}
       {activeTab === TABS.DETAILS && <Details film={film} />}
-      {activeTab === TABS.REVIEWS && <Reviews reviews={reviews} />}
+      {activeTab === TABS.REVIEWS && <Reviews />}
     </div>
   );
 }

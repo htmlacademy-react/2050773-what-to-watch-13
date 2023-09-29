@@ -1,10 +1,22 @@
-import { TReview } from '../../types/review';
+import { useAppDispatch, useAppSelector } from '../../hooks/index';
+import { fetchReviewsAction } from '../../store/api-actions';
+import { useParams } from 'react-router-dom';
+import { useEffect } from 'react';
 
-type ReviewsProps = {
-  reviews: TReview[];
-}
 
-function Reviews({reviews}: ReviewsProps): JSX.Element {
+function Reviews(): JSX.Element {
+
+  const {id} = useParams();
+  const dispatch = useAppDispatch();
+  const reviews = useAppSelector((state) => state.reviews)
+
+  useEffect(() => {
+    if (id) {
+      dispatch(fetchReviewsAction(id));
+    }
+  }, [id, dispatch]);
+
+
   const firstHalfReviews = reviews.slice(0, Math.ceil(reviews.length / 2));
   const secondHalfReviews = reviews.slice(Math.ceil(reviews.length / 2));
 

@@ -1,5 +1,6 @@
 import { createAction } from '@reduxjs/toolkit';
 import { TFilmSmallCards, TFilm, TPromo } from '../types/films';
+import { TReviews } from '../types/review';
 import { AuthorizationStatus, AppRoute } from '../const';
 
 
@@ -15,3 +16,5 @@ export const redirectToRoute = createAction<AppRoute>('redirectToRoute');
 export const setFilmDataLoadingStatus = createAction<boolean>('setFilmDataLoadingStatus');
 export const setPromoFilmDataLoadingStatus = createAction<boolean>('setPromoFilmDataLoadingStatus');
 export const loadPromoFilm = createAction<{promo: TPromo | null}>('loadPromoFilm');
+export const fillReviewsList = createAction<{reviews: TReviews}>('fillReviewsList');
+export const setReviewsDataLoadingStatus = createAction<boolean>('setReviewsDataLoadingStatus');

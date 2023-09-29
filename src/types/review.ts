@@ -5,3 +5,5 @@ export type TReview = {
   comment: string;
   rating: number;
 }
+
+export type TReviews = TReview[];

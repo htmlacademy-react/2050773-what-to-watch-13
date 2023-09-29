@@ -13,6 +13,7 @@ import { useAppSelector, useAppDispatch } from '../../hooks/index';
 import { useEffect } from 'react';
 import { fetchFilmByIdAction } from '../../store/api-actions';
 import LoadingScreen from '../loading-screen/loading-screen';
+import NotFoundScreen from '../not-found-screen/not-found-screen';
 
 type FilmCardProps = {
   reviews: TReview[];
@@ -42,7 +43,7 @@ function FilmScreen({ reviews, films}: FilmCardProps): JSX.Element {
   }
 
   if (!film) {
-    return <p>No film found!</p>;
+    return <NotFoundScreen />;
   }
 
   const { name, genre, released, backgroundImage, backgroundColor, posterImage } = film;
