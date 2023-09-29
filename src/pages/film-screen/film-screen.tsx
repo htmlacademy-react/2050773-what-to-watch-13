@@ -9,8 +9,7 @@ import { useSearchParams } from 'react-router-dom';
 import { TABS } from '../../const';
 import FilmCardsList from '../../components/film-cards-list/film-cards-list';
 import { useParams } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
-import { useAppSelector } from '../../hooks/index';
+import { useAppSelector, useAppDispatch } from '../../hooks/index';
 import { useEffect } from 'react';
 import { fetchFilmByIdAction } from '../../store/api-actions';
 import LoadingScreen from '../loading-screen/loading-screen';
@@ -21,16 +20,10 @@ type FilmCardProps = {
 };
 
 
-function FilmScreen({ reviews, films }: FilmCardProps): JSX.Element {
-  const { id } = useParams();
-  const dispatch = useDispatch();
-  const {
-    film,
-    isFilmDataLoading,
-  } = useAppSelector((state) => ({
-    film: state.film,
-    isFilmDataLoading: state.isFilmDataLoading,
-  }));
+function FilmScreen({ reviews, films}: FilmCardProps): JSX.Element {
+  const {id} = useParams();
+  const dispatch = useAppDispatch();
+
 
   useEffect(() => {
     if (id) {
@@ -38,35 +31,87 @@ function FilmScreen({ reviews, films }: FilmCardProps): JSX.Element {
     }
   }, [id, dispatch]);
 
+  const film = useAppSelector((state) => state.film);
+  const isFilmDataLoading = useAppSelector((state) => state.isFilmDataLoading);
+  const [searchParams, setSearchParams] = useSearchParams();
+
+
   if (isFilmDataLoading) {
-    return <LoadingScreen />;
+    return(<LoadingScreen />
+    );
   }
 
   if (!film) {
     return <p>No film found!</p>;
   }
 
-  const { name, genre, released } = film;
-  const [searchParams, setSearchParams] = useSearchParams();
+  const { name, genre, released, backgroundImage, backgroundColor, posterImage } = film;
+  console.log(film);
+
+
   const activeTab = searchParams.get('tab') || TABS.OVERVIEW;
 
   const handleTabClick = (tab: TTab) => {
     setSearchParams({ tab });
   };
 
-  return (
+
+  return(
     <>
-      <Helmet>
-        <title>WTW. Film</title>
-      </Helmet>
-      <Header backgroundImage="img/bg-the-grand-budapest-hotel.jpg" />
+      <section className="film-card film-card--full" style={{background: backgroundColor}}>
+        <Helmet>
+          <title> WTW. Film</title>
+        </Helmet>
+        <div className="film-card__hero">
+          <div className="film-card__bg">
+            <img src={backgroundImage} alt="The Grand Budapest Hotel" />
+          </div>
 
-      {/* We could extract the below section into a separate FilmInfo component for better modularity */}
-      <section className="film-card film-card--full">
-        {/* ... (rest of the content) */}
+          <Header />
+
+          <div className="film-card__wrap">
+            <div className="film-card__desc">
+              <h2 className="film-card__title">{name}</h2>
+              <p className="film-card__meta">
+                <span className="film-card__genre">{genre}</span>
+                <span className="film-card__year">{released}</span>
+              </p>
+
+              <div className="film-card__buttons">
+                <button className="btn btn--play film-card__button" type="button">
+                  <svg viewBox="0 0 19 19" width="19" height="19">
+                    <use xlinkHref="#play-s"></use>
+                  </svg>
+                  <span>Play</span>
+                </button>
+                <button className="btn btn--list film-card__button" type="button">
+                  <svg viewBox="0 0 19 20" width="19" height="20">
+                    <use xlinkHref="#add"></use>
+                  </svg>
+                  <span>My list</span>
+                  <span className="film-card__count">9</span>
+                </button>
+                <a href="add-review.html" className="btn film-card__button">Add review</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="film-card__wrap film-card__translate-top">
+          <div className="film-card__info">
+            <div className="film-card__poster film-card__poster--big">
+              <img src={posterImage} alt={name} width="218" height="327" />
+            </div>
+
+            <div className="film-card__desc">
+              <Tabs activeTab={activeTab} onTabClick={handleTabClick} film={film} reviews={reviews} />
+            </div>
+
+          </div>
+        </div>
       </section>
-
       <div className="page-content">
+
         <section className="catalog catalog--like-this">
           <h2 className="catalog__title">More like this</h2>
           <FilmCardsList films={films} />
@@ -75,6 +120,8 @@ function FilmScreen({ reviews, films }: FilmCardProps): JSX.Element {
         <Footer />
       </div>
     </>
+
+
   );
 }
 

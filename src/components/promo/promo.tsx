@@ -1,12 +1,11 @@
 import { useAppSelector } from '../../hooks/index';
 import { useEffect } from 'react';
 import { fetchPromoFilmAction } from '../../store/api-actions';
-import { useDispatch } from 'react-redux';
-
+import { useAppDispatch } from '../../hooks/index';
 
 function Promo():JSX.Element {
   const promoFilm = useAppSelector((state) => state.promo);
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     if (!promoFilm) {
