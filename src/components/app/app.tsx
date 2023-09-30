@@ -9,21 +9,17 @@ import MyListScreen from '../../pages/my-list-screen/my-list-screen';
 import AddReviewScreen from '../../pages/add-review-screen/add-review-screen';
 import NotFoundScreen from '../../pages/not-found-screen/not-found-screen';
 import PrivateRoute from '../private-route/private-route';
-// import { TFilms } from '../../types/films';
-import { TReview } from '../../types/review';
 import { useAppSelector } from '../../hooks/index';
 import LoadingScreen from '../../pages/loading-screen/loading-screen';
 import HistoryRouter from '../history-route/history-route';
 import browserHistory from '../../browser-history';
 
 type AppScreenProps = {
-  // films: TFilms[];
-  reviews: TReview[];
   genres: string[];
 }
 
 
-function App({ reviews, genres }: AppScreenProps): JSX.Element {
+function App({ genres }: AppScreenProps): JSX.Element {
   const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
   const isFilmsDataLoading = useAppSelector((state) => state.isFilmsDataLoading);
   const films = useAppSelector((state) => state.films);
@@ -55,7 +51,7 @@ function App({ reviews, genres }: AppScreenProps): JSX.Element {
           />
           <Route
             path={AppRoute.Film}
-            element={<FilmScreen film={films[5]} reviews={reviews} films={recommendedFilms} />}
+            element={<FilmScreen film={films[5]} films={recommendedFilms} />}
           />
           <Route
             path={AppRoute.MyList}
@@ -69,7 +65,7 @@ function App({ reviews, genres }: AppScreenProps): JSX.Element {
             path={AppRoute.AddReview}
             element={
               <PrivateRoute>
-                <AddReviewScreen film={films[3]} />
+                <AddReviewScreen />
               </PrivateRoute>
             }
           />

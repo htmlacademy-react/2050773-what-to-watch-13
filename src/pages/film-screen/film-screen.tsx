@@ -1,10 +1,9 @@
 import Header from '../../components/header/header';
 import { Helmet } from 'react-helmet-async';
-import { TFilm, TFilms } from '../../types/films';
+import { TFilms } from '../../types/films';
 import Footer from '../../components/footer/footer';
 import Tabs from '../../components/tabs/tabs';
 import { TTab } from '../../types/tabs';
-import { TReview } from '../../types/review';
 import { useSearchParams } from 'react-router-dom';
 import { TABS } from '../../const';
 import FilmCardsList from '../../components/film-cards-list/film-cards-list';
@@ -14,16 +13,18 @@ import { useEffect } from 'react';
 import { fetchFilmByIdAction } from '../../store/api-actions';
 import LoadingScreen from '../loading-screen/loading-screen';
 import NotFoundScreen from '../not-found-screen/not-found-screen';
+import { useNavigate } from 'react-router-dom';
+
 
 type FilmCardProps = {
-  reviews: TReview[];
   films: TFilms;
 };
 
 
-function FilmScreen({ reviews, films}: FilmCardProps): JSX.Element {
+function FilmScreen({films}: FilmCardProps): JSX.Element {
   const {id} = useParams();
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
 
   useEffect(() => {
@@ -31,6 +32,7 @@ function FilmScreen({ reviews, films}: FilmCardProps): JSX.Element {
       dispatch(fetchFilmByIdAction(id));
     }
   }, [id, dispatch]);
+
 
   const film = useAppSelector((state) => state.film);
   const isFilmDataLoading = useAppSelector((state) => state.isFilmDataLoading);
@@ -47,8 +49,10 @@ function FilmScreen({ reviews, films}: FilmCardProps): JSX.Element {
   }
 
   const { name, genre, released, backgroundImage, backgroundColor, posterImage } = film;
-  console.log(film);
 
+  const handleAddReviewClick = () => {
+    navigate(`/films/${film.id}/review`, { state: { film } });
+  };
 
   const activeTab = searchParams.get('tab') || TABS.OVERVIEW;
 
@@ -92,7 +96,7 @@ function FilmScreen({ reviews, films}: FilmCardProps): JSX.Element {
                   <span>My list</span>
                   <span className="film-card__count">9</span>
                 </button>
-                <a href="add-review.html" className="btn film-card__button">Add review</a>
+                <a className="btn film-card__button" onClick={handleAddReviewClick}>Add Review</a>
               </div>
             </div>
           </div>
@@ -105,7 +109,7 @@ function FilmScreen({ reviews, films}: FilmCardProps): JSX.Element {
             </div>
 
             <div className="film-card__desc">
-              <Tabs activeTab={activeTab} onTabClick={handleTabClick} film={film} reviews={reviews} />
+              <Tabs activeTab={activeTab} onTabClick={handleTabClick} film={film} />
             </div>
 
           </div>

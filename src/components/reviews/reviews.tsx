@@ -8,7 +8,7 @@ function Reviews(): JSX.Element {
 
   const {id} = useParams();
   const dispatch = useAppDispatch();
-  const reviews = useAppSelector((state) => state.reviews)
+  const reviews = useAppSelector((state) => state.reviews);
 
   useEffect(() => {
     if (id) {

@@ -1,7 +1,6 @@
 import { TTab } from '../../types/tabs';
 import { TABS } from '../../const';
 import { TFilms } from '../../types/films';
-import { TReview } from '../../types/review';
 import Overview from '../../components/overview/overview';
 import Details from '../../components/details/details';
 import Reviews from '../../components/reviews/reviews';
@@ -11,11 +10,10 @@ type TabsProps = {
   activeTab: TTab;
   onTabClick: (tab: TTab) => void;
   film: TFilms;
-  reviews: TReview[];
 }
 
 
-function Tabs({activeTab, onTabClick, film, reviews}: TabsProps): JSX.Element {
+function Tabs({activeTab, onTabClick, film}: TabsProps): JSX.Element {
 
   return(
     <div>

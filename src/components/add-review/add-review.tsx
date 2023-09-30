@@ -14,7 +14,7 @@ function AddReview(): JSX.Element {
           <div className="rating__stars">
             {
               Array.from({length: 10}, (_, i) => 10 - i).map((num) => (
-                <>
+                <div key={num}>
                   <input className='rating__input'
                     id={`star-${num}`}
                     type='radio'
@@ -22,10 +22,9 @@ function AddReview(): JSX.Element {
                     value={num.toString()}
                     checked={rating === num.toString()}
                     onChange={(e) => setRating(e.target.value)}
-                    key={num}
                   />
                   <label className='rating__label' htmlFor={`star-${num}`}> Rating {num}</label>
-                </>
+                </div>
               ))
             }
           </div>
