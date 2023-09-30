@@ -1,7 +1,7 @@
 import { createReducer } from '@reduxjs/toolkit';
 import { TFilmSmallCards, TFilm, TPromo } from '../types/films';
-import { TReviews } from '../types/review';
-import { changeGenre, fillFilmsList, increaseDisplayFilmsCount, resetDisplayFilmsCount, requireAuthorization, setError, setFilmsDataLoadingStatus, loadFilmById, loadPromoFilm, setFilmDataLoadingStatus, setPromoFilmDataLoadingStatus, fillReviewsList } from './action';
+import { TReviews, TReview } from '../types/review';
+import { changeGenre, fillFilmsList, increaseDisplayFilmsCount, resetDisplayFilmsCount, requireAuthorization, setError, setFilmsDataLoadingStatus, loadFilmById, loadPromoFilm, setFilmDataLoadingStatus, setPromoFilmDataLoadingStatus, fillReviewsList, sendComment } from './action';
 import { DISPLAYED_FILMS_COUNT, AuthorizationStatus } from '../const';
 
 
@@ -19,6 +19,7 @@ type InitialStateType = {
   film: TFilm | null;
   promo: TPromo | null;
   reviews: TReviews;
+  review: TReview | null;
 };
 
 const InitialState: InitialStateType = {
@@ -33,6 +34,7 @@ const InitialState: InitialStateType = {
   film: null,
   promo: null,
   reviews: [],
+  review: null
 };
 
 const reducer = createReducer(InitialState, (builder) => {
@@ -72,6 +74,9 @@ const reducer = createReducer(InitialState, (builder) => {
     })
     .addCase(fillReviewsList, (state, action) => {
       state.reviews = action.payload.reviews;
+    })
+    .addCase(sendComment, (state, action) => {
+      state.review = action.payload;
     });
 });
 

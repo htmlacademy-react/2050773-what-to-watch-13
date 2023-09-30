@@ -2,13 +2,13 @@ import { AxiosInstance } from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { AppDispatch, State } from '../types/state.js';
 import { TFilmSmallCards, TFilm, TPromo } from '../types/films.js';
-import { fillFilmsList, requireAuthorization, setError, setFilmsDataLoadingStatus, loadFilmById, redirectToRoute, setFilmDataLoadingStatus, setPromoFilmDataLoadingStatus, loadPromoFilm, fillReviewsList } from './action';
+import { fillFilmsList, requireAuthorization, setError, setFilmsDataLoadingStatus, loadFilmById, redirectToRoute, setFilmDataLoadingStatus, setPromoFilmDataLoadingStatus, loadPromoFilm, fillReviewsList, sendComment } from './action';
 import { saveToken, dropToken } from '../services/token';
 import { APIRoute, AppRoute, AuthorizationStatus, TIMEOUT_SHOW_ERROR } from '../const';
 import { AuthData } from '../types/auth-data';
 import { UserData } from '../types/user-data';
 import { store } from './';
-import { TReviews } from '../types/review.js';
+import { TReviews, TReview } from '../types/review.js';
 
 export const clearErrorAction = createAsyncThunk(
   'clearError',
@@ -41,8 +41,20 @@ export const fetchReviewsAction = createAsyncThunk<void, string, {
 }>(
   'fetchReviews',
   async (filmId, {dispatch, extra: api}) => {
-    const {data} = await api.get<TReviews>(`${APIRoute.GetReviews}/${filmId}`);
+    const {data} = await api.get<TReviews>(`${APIRoute.Comments}/${filmId}`);
     dispatch(fillReviewsList({ reviews: data }));
+  },
+);
+
+export const fetchSendCommentAction = createAsyncThunk<void, {rating: number; comment: string; filmId: string}, {
+  dispatch: AppDispatch;
+  state: State;
+  extra: AxiosInstance;
+}>(
+  'fetchSendComment',
+  async ({filmId, rating, comment}, {dispatch, extra: api}) => {
+    const {data} = await api.post<TReview>(`${APIRoute.Comments}/${filmId}`, {rating, comment});
+    dispatch(sendComment(data));
   },
 );
 
@@ -58,7 +70,6 @@ export const fetchFilmByIdAction = createAsyncThunk<void, string, {
       dispatch(loadFilmById({ film: data }));
       dispatch(setFilmDataLoadingStatus(false));
     } catch (error) {
-      console.error("API Error:", error.response ? error.response.data : error.message);
       dispatch(setError('Failed to fetch the film by its ID.'));
     }
   },
@@ -78,9 +89,8 @@ export const fetchPromoFilmAction = createAsyncThunk<TPromo, undefined, {
       dispatch(setPromoFilmDataLoadingStatus(false)); // End loading
       return data;
     } catch (error) {
-      console.error("API Error:", error.response ? error.response.data : error.message);
       dispatch(setError('Failed to fetch promo film.'));
-      throw error;// This is crucial to tell Redux Toolkit that the async thunk has failed.
+      throw error;
     }
   }
 );

@@ -14,6 +14,7 @@ import { fetchFilmByIdAction } from '../../store/api-actions';
 import LoadingScreen from '../loading-screen/loading-screen';
 import NotFoundScreen from '../not-found-screen/not-found-screen';
 import { useNavigate } from 'react-router-dom';
+import { AuthorizationStatus } from '../../const';
 
 
 type FilmCardProps = {
@@ -37,6 +38,8 @@ function FilmScreen({films}: FilmCardProps): JSX.Element {
   const film = useAppSelector((state) => state.film);
   const isFilmDataLoading = useAppSelector((state) => state.isFilmDataLoading);
   const [searchParams, setSearchParams] = useSearchParams();
+
+  const currentAuthorizationStatus = useAppSelector((state) => state.authorizationStatus);
 
 
   if (isFilmDataLoading) {
@@ -96,7 +99,9 @@ function FilmScreen({films}: FilmCardProps): JSX.Element {
                   <span>My list</span>
                   <span className="film-card__count">9</span>
                 </button>
-                <a className="btn film-card__button" onClick={handleAddReviewClick}>Add Review</a>
+                { currentAuthorizationStatus === AuthorizationStatus.Auth && (
+                  <a className="btn film-card__button" onClick={handleAddReviewClick}>Add Review</a>
+                )}
               </div>
             </div>
           </div>

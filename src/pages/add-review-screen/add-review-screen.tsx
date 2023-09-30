@@ -59,7 +59,7 @@ function AddReviewScreen(): JSX.Element {
           <img src={film.posterImage} alt={film.name} width="218" height="327" />
         </div>
       </div>
-      <AddReview />
+      <AddReview id={id as string} />
     </section>
   );
 }

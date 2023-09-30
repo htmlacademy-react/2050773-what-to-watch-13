@@ -29,7 +29,7 @@ export enum APIRoute {
   Promo = '/promo',
   Login = '/login',
   Logout = '/logout',
-  GetReviews = '/comments/'
+  Comments = '/comments'
 }
 
 export const TIMEOUT_SHOW_ERROR = 2000;
