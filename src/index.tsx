@@ -4,7 +4,6 @@ import App from './components/app/app';
 import { Provider } from 'react-redux';
 import { store } from './store';
 import { GENRES } from './const';
-import ErrorMessage from './components/error-message/error-message';
 import { fetchFilmsAction, checkAuthAction } from './store/api-actions';
 
 
@@ -19,7 +18,6 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <Provider store={store}>
-      <ErrorMessage />
       <App
         genres={GENRES}
       />

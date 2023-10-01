@@ -1,23 +1,22 @@
 import classNames from 'classnames';
 import { useAppDispatch, useAppSelector } from '../../hooks/index';
-import { changeGenre, fillFilmsList, resetDisplayFilmsCount } from '../../store/action';
-import { TFilmSmallCards} from '../../types/films';
+import { changeGenre, resetDisplayFilmsCount } from '../../store/films-process/films-process.slice';
+import { getGenre } from '../../store/films-process/films-process.selectors';
 
 type GenresListProps = {
   genres: string[];
-  films: TFilmSmallCards;
 }
 
-function GenresList({genres, films}: GenresListProps): JSX.Element {
+function GenresList({genres}: GenresListProps): JSX.Element {
   const dispatch = useAppDispatch();
+  const activeGenre = useAppSelector(getGenre);
+
 
   const handleGenreChange = (genre: string) => {
-    dispatch(changeGenre({genre}));
-    dispatch(fillFilmsList({films}));
+    dispatch(changeGenre(genre));
     dispatch(resetDisplayFilmsCount()); //сбрасывает счетчик до 8 каждый раз когда меняю жанр
   };
 
-  const activeGenre = useAppSelector((state) => state.genre);
 
   return (
     <ul className="catalog__genres-list">

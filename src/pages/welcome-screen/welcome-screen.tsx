@@ -7,11 +7,12 @@ import GenresList from '../../components/genres-list/genres-list';
 import { useAppSelector } from '../../hooks/index';
 import ShowMoreButton from '../../components/show-more-button/show-more-button';
 import { useDispatch } from 'react-redux';
-import { increaseDisplayFilmsCount, resetDisplayFilmsCount } from '../../store/action';
 import { useEffect } from 'react';
 import { GenresNamespace } from '../../const';
 import Promo from '../../components/promo/promo';
-
+import { getGenre } from '../../store/films-process/films-process.selectors';
+import { resetDisplayFilmsCount, increaseDisplayFilmsCount } from '../../store/films-process/films-process.slice';
+import { getDisplayedFilmsCount } from '../../store/films-process/films-process.selectors';
 
 type WelcomeScreenProps = {
   filmsSmallCards: TFilmSmallCards;
@@ -20,7 +21,7 @@ type WelcomeScreenProps = {
 
 function WelcomeScreen({filmsSmallCards, genres}: WelcomeScreenProps): JSX.Element {
 
-  const currentGenre = useAppSelector((state) => state.genre);
+  const currentGenre = useAppSelector(getGenre);
   const filmsByCurrentGenre = currentGenre === 'All genres' ? filmsSmallCards : filmsSmallCards.filter((filmItem) => filmItem.genre === GenresNamespace[currentGenre as keyof typeof GenresNamespace]);
   const dispatch = useDispatch();
 
@@ -33,7 +34,7 @@ function WelcomeScreen({filmsSmallCards, genres}: WelcomeScreenProps): JSX.Eleme
     dispatch(increaseDisplayFilmsCount());
   };
 
-  const displayedFilmsCount = useAppSelector((state) => state.displayedFilmsCount);
+  const displayedFilmsCount = useAppSelector(getDisplayedFilmsCount);
   const filmsShowed = filmsByCurrentGenre.slice(0, displayedFilmsCount);
 
 
@@ -44,7 +45,7 @@ function WelcomeScreen({filmsSmallCards, genres}: WelcomeScreenProps): JSX.Eleme
           <title>WTW. Welcome!</title>
         </Helmet>
 
-        <Header backgroundImage="img/bg-the-grand-budapest-hotel.jpg" />
+        <Header />
 
         <Promo />
 

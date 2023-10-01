@@ -15,6 +15,8 @@ import LoadingScreen from '../loading-screen/loading-screen';
 import NotFoundScreen from '../not-found-screen/not-found-screen';
 import { useNavigate } from 'react-router-dom';
 import { AuthorizationStatus } from '../../const';
+import { getAuthorizationStatus } from '../../store/user-process/user-process.selector';
+import { isFilmDataLoading, getFilm } from '../../store/film-data/film-data.selectors';
 
 
 type FilmCardProps = {
@@ -35,14 +37,14 @@ function FilmScreen({films}: FilmCardProps): JSX.Element {
   }, [id, dispatch]);
 
 
-  const film = useAppSelector((state) => state.film);
-  const isFilmDataLoading = useAppSelector((state) => state.isFilmDataLoading);
+  const film = useAppSelector(getFilm);
+  const isFilmLoading = useAppSelector(isFilmDataLoading);
   const [searchParams, setSearchParams] = useSearchParams();
 
-  const currentAuthorizationStatus = useAppSelector((state) => state.authorizationStatus);
+  const currentAuthorizationStatus = useAppSelector(getAuthorizationStatus);
 
 
-  if (isFilmDataLoading) {
+  if (isFilmLoading) {
     return(<LoadingScreen />
     );
   }

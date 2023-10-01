@@ -2,13 +2,15 @@ import { useAppDispatch, useAppSelector } from '../../hooks/index';
 import { fetchReviewsAction } from '../../store/api-actions';
 import { useParams } from 'react-router-dom';
 import { useEffect } from 'react';
+import { getReviews } from '../../store/film-data/film-data.selectors';
 
 
 function Reviews(): JSX.Element {
 
-  const {id} = useParams();
+  const { id } = useParams<{ id: string }>();
+
   const dispatch = useAppDispatch();
-  const reviews = useAppSelector((state) => state.reviews);
+  const reviews = useAppSelector(getReviews);
 
   useEffect(() => {
     if (id) {

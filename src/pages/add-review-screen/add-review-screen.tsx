@@ -6,6 +6,7 @@ import { useAppSelector, useAppDispatch, useFilmFromLocation } from '../../hooks
 import { useEffect } from 'react';
 import { fetchFilmByIdAction } from '../../store/api-actions';
 import { useParams } from 'react-router-dom';
+import { getFilm } from '../../store/film-data/film-data.selectors';
 
 
 function AddReviewScreen(): JSX.Element {
@@ -13,9 +14,7 @@ function AddReviewScreen(): JSX.Element {
   const { id } = useParams();
   const dispatch = useAppDispatch();
 
-  // console.log('filmFromState', filmFromState);
-
-  const selectedFilm = useAppSelector((state) => state.film);
+  const selectedFilm = useAppSelector(getFilm);
   const film = filmFromState || selectedFilm;
 
   useEffect(() => {

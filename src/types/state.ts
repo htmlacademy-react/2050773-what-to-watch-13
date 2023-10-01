@@ -1,5 +1,30 @@
 import { store } from '../store/index';
-import { TFilm } from './films';
+import { TFilm, TFilmSmallCards, TPromo } from './films';
+import { TReviews, TReview } from './review';
+import {AuthorizationStatus} from '../const';
+
+export type UserProcess = {
+  authorizationStatus: AuthorizationStatus;
+};
+
+export type FilmsData = {
+  films: TFilmSmallCards;
+  isFilmsDataLoading: boolean;
+}
+
+export type FilmsProcess = {
+  genre: string;
+  displayedFilmsCount: number;
+}
+
+export type FilmData = {
+  film: TFilm | null;
+  isFilmDataLoading: boolean;
+  promo: TPromo | null;
+  isPromoFilmDataLoading: boolean;
+  reviews: TReviews;
+  review: TReview | null;
+}
 
 export type State = ReturnType<typeof store.getState>; // псевдоним типа, равный структуре нашего хранилища
 

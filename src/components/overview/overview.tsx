@@ -1,7 +1,7 @@
-import { TFilms } from '../../types/films';
+import { TFilm } from '../../types/films';
 
 type OverViewProps = {
-  film: TFilms;
+  film: TFilm;
 }
 
 function Overview({film}: OverViewProps): JSX.Element {

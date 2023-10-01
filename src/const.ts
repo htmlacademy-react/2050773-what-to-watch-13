@@ -44,3 +44,12 @@ export enum GenresNamespace {
   Dramas = 'Drama',
   Thrillers = 'Thriller',
 }
+
+export enum NameSpace {
+  Films = 'FILMS',
+  FilmsScreen = 'FILMS_SCREEN',
+  Film = 'FILM',
+  User = 'USER',
+}
+
+export const DEFAULT_GENRE = 'All genres';

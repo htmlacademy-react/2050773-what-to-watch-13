@@ -5,6 +5,7 @@ import { AuthorizationStatus } from '../../const';
 import { useAppSelector } from '../../hooks/index';
 import { useAppDispatch } from '../../hooks/index';
 import { logoutAction } from '../../store/api-actions';
+import { getAuthorizationStatus } from '../../store/user-process/user-process.selector';
 
 type HeaderSignInProps = {
   isSignInPage: boolean;
@@ -51,7 +52,7 @@ function Header({children}: PropsWithChildren): JSX.Element {
   const isSignInPage = pathname === AppRoute.SignIn;
   const isFilmPage = pathname.split('/')[1] === AppRoute.Film.split('/')[1];
   const isMyListPage = pathname === AppRoute.MyList;
-  const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
 
   return(
 

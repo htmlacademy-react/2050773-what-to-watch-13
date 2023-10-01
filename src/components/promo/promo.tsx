@@ -2,9 +2,10 @@ import { useAppSelector } from '../../hooks/index';
 import { useEffect } from 'react';
 import { fetchPromoFilmAction } from '../../store/api-actions';
 import { useAppDispatch } from '../../hooks/index';
+import { getPromo } from '../../store/film-data/film-data.selectors';
 
 function Promo():JSX.Element {
-  const promoFilm = useAppSelector((state) => state.promo);
+  const promoFilm = useAppSelector(getPromo);
   const dispatch = useAppDispatch();
 
   useEffect(() => {

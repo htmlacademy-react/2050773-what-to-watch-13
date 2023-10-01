@@ -39,7 +39,6 @@ function AddReview({id}: AddReviewProps): JSX.Element {
     setIsFormDisabled(true);
     setErrorMessage(null);
 
-    // Now, dispatch the action and handle the Promise inside the handler without making it async
     dispatch(fetchSendCommentAction({ rating: ratingNumber, comment, filmId: id }))
       .then(() => {
         navigate(`${APIRoute.Films}/${id}`);

@@ -13,6 +13,10 @@ import { useAppSelector } from '../../hooks/index';
 import LoadingScreen from '../../pages/loading-screen/loading-screen';
 import HistoryRouter from '../history-route/history-route';
 import browserHistory from '../../browser-history';
+import { getAuthorizationStatus } from '../../store/user-process/user-process.selector';
+import { getFilmsDataLoadingStatus } from '../../store/films-data/films-data.selectors';
+import { getFilms } from '../../store/films-data/films-data.selectors';
+
 
 type AppScreenProps = {
   genres: string[];
@@ -20,9 +24,9 @@ type AppScreenProps = {
 
 
 function App({ genres }: AppScreenProps): JSX.Element {
-  const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
-  const isFilmsDataLoading = useAppSelector((state) => state.isFilmsDataLoading);
-  const films = useAppSelector((state) => state.films);
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
+  const isFilmsDataLoading = useAppSelector(getFilmsDataLoadingStatus);
+  const films = useAppSelector(getFilms);
 
   if (authorizationStatus === AuthorizationStatus.Unknown || isFilmsDataLoading) {
     return (
