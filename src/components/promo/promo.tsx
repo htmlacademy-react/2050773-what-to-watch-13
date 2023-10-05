@@ -1,24 +1,14 @@
-import { useAppSelector } from '../../hooks/index';
-import { useEffect } from 'react';
-import { fetchPromoFilmAction } from '../../store/api-actions';
-import { useAppDispatch } from '../../hooks/index';
-import { getPromo } from '../../store/film-data/film-data.selectors';
+import { TPromo } from '../../types/films';
 
-function Promo():JSX.Element {
-  const promoFilm = useAppSelector(getPromo);
-  const dispatch = useAppDispatch();
+type PromoProps = {
+  promoFilm: TPromo;
+  onPlay: (videoLink: string) => void;
+};
 
-  useEffect(() => {
-    if (!promoFilm) {
-      dispatch(fetchPromoFilmAction());
-    }
-  }, [dispatch, promoFilm]);
+function Promo({promoFilm, onPlay}: PromoProps): JSX.Element {
 
-  if (!promoFilm) {
-    return <p>Loading...</p>;
-  }
 
-  const {id, name, posterImage, backgroundImage, videoLink, genre, released } = promoFilm;
+  const {name, posterImage, backgroundImage, videoLink, genre, released } = promoFilm;
 
   return(
 
@@ -26,7 +16,8 @@ function Promo():JSX.Element {
       <div className="film-card__bg">
         <img src={backgroundImage} alt="The Grand Budapest Hotel" />
       </div>
-      <h1 className="visually-hidden">WTW</h1><div className="film-card__wrap">
+      <h1 className="visually-hidden">WTW</h1>
+      <div className="film-card__wrap">
         <div className="film-card__info">
           <div className="film-card__poster">
             <img src={posterImage} alt={name} width="218" height="327" />
@@ -40,7 +31,7 @@ function Promo():JSX.Element {
             </p>
 
             <div className="film-card__buttons">
-              <button className="btn btn--play film-card__button" type="button">
+              <button className="btn btn--play film-card__button" type="button" onClick={() => onPlay(videoLink)}>
                 <svg viewBox="0 0 19 19" width="19" height="19">
                   <use xlinkHref="#play-s"></use>
                 </svg>
