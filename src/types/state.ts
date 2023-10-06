@@ -10,6 +10,8 @@ export type UserProcess = {
 export type FilmsData = {
   films: TFilmSmallCards;
   isFilmsDataLoading: boolean;
+  similarFilms: TFilmSmallCards;
+  isSimilarFilmsDataLoading: boolean;
 }
 
 export type FilmsProcess = {

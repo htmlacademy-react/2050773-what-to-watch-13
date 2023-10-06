@@ -34,9 +34,6 @@ function App({ genres }: AppScreenProps): JSX.Element {
     );
   }
 
-  const recommendedFilms = films.slice(-4); //временный вариант
-
-
   return(
     <HelmetProvider>
       <HistoryRouter history={browserHistory}>
@@ -55,7 +52,7 @@ function App({ genres }: AppScreenProps): JSX.Element {
           />
           <Route
             path={AppRoute.Film}
-            element={<FilmScreen film={films[5]} films={recommendedFilms} />}
+            element={<FilmScreen />}
           />
           <Route
             path={AppRoute.MyList}

@@ -1,6 +1,5 @@
 import Header from '../../components/header/header';
 import { Helmet } from 'react-helmet-async';
-import { TFilms } from '../../types/films';
 import Footer from '../../components/footer/footer';
 import Tabs from '../../components/tabs/tabs';
 import { TTab } from '../../types/tabs';
@@ -10,7 +9,7 @@ import FilmCardsList from '../../components/film-cards-list/film-cards-list';
 import { useParams } from 'react-router-dom';
 import { useAppSelector, useAppDispatch } from '../../hooks/index';
 import { useEffect } from 'react';
-import { fetchFilmByIdAction } from '../../store/api-actions';
+import { fetchFilmByIdAction, fetchSimilarFilmsAction } from '../../store/api-actions';
 import LoadingScreen from '../loading-screen/loading-screen';
 import NotFoundScreen from '../not-found-screen/not-found-screen';
 import { useNavigate } from 'react-router-dom';
@@ -18,14 +17,10 @@ import { AuthorizationStatus } from '../../const';
 import { getAuthorizationStatus } from '../../store/user-process/user-process.selector';
 import { isFilmDataLoading, getFilm } from '../../store/film-data/film-data.selectors';
 import VideoPlayButton from '../../components/video-play-button/video-play-button';
+import { getSimilarFilms } from '../../store/films-data/films-data.selectors';
 
 
-type FilmCardProps = {
-  films: TFilms;
-};
-
-
-function FilmScreen({films}: FilmCardProps): JSX.Element {
+function FilmScreen(): JSX.Element {
   const {id} = useParams();
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
@@ -34,6 +29,7 @@ function FilmScreen({films}: FilmCardProps): JSX.Element {
   useEffect(() => {
     if (id) {
       dispatch(fetchFilmByIdAction(id));
+      dispatch(fetchSimilarFilmsAction(id));
     }
   }, [id, dispatch]);
 
@@ -41,6 +37,10 @@ function FilmScreen({films}: FilmCardProps): JSX.Element {
   const film = useAppSelector(getFilm);
   const isFilmLoading = useAppSelector(isFilmDataLoading);
   const [searchParams, setSearchParams] = useSearchParams();
+  const similarFilms = useAppSelector(getSimilarFilms);
+
+  // console.log(similarFilms);
+
 
   const currentAuthorizationStatus = useAppSelector(getAuthorizationStatus);
 
@@ -123,7 +123,7 @@ function FilmScreen({films}: FilmCardProps): JSX.Element {
 
         <section className="catalog catalog--like-this">
           <h2 className="catalog__title">More like this</h2>
-          <FilmCardsList films={films} />
+          <FilmCardsList films={similarFilms} />
         </section>
 
         <Footer />

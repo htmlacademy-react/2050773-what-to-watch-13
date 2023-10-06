@@ -22,6 +22,18 @@ export const fetchFilmsAction = createAsyncThunk<TFilmSmallCards, undefined, {
   },
 );
 
+export const fetchSimilarFilmsAction = createAsyncThunk<TFilmSmallCards, string, {
+  dispatch: AppDispatch;
+  state: State;
+  extra: AxiosInstance;
+}>(
+  'fetchSimilarFilms',
+  async (filmId, { extra: api}) => {
+    const {data} = await api.get<TFilmSmallCards>(`${APIRoute.Films}/${filmId}/similar`);
+    return data;
+  },
+);
+
 export const fetchReviewsAction = createAsyncThunk<TReviews, string, {
   dispatch: AppDispatch;
   state: State;
