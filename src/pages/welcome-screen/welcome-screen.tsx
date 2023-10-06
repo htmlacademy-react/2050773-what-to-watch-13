@@ -15,7 +15,7 @@ import { getDisplayedFilmsCount } from '../../store/films-process/films-process.
 import { getPromo } from '../../store/film-data/film-data.selectors';
 import { useAppDispatch } from '../../hooks/index';
 import { fetchPromoFilmAction } from '../../store/api-actions';
-import PlayerFullScreen from '../../components/player-full-screen/player-full-screen';
+import PlayerScreen from '../player-screen/player-screen';
 
 type WelcomeScreenProps = {
   filmsSmallCards: TFilmSmallCards;
@@ -28,6 +28,7 @@ function WelcomeScreen({filmsSmallCards, genres}: WelcomeScreenProps): JSX.Eleme
   const filmsByCurrentGenre = currentGenre === 'All genres' ? filmsSmallCards : filmsSmallCards.filter((filmItem) => filmItem.genre === GenresNamespace[currentGenre as keyof typeof GenresNamespace]);
   const promoFilm = useAppSelector(getPromo);
   const dispatch = useAppDispatch();
+  const [isPlaying, setIsPlaying] = useState(false);
 
 
   useEffect(() => {
@@ -35,16 +36,6 @@ function WelcomeScreen({filmsSmallCards, genres}: WelcomeScreenProps): JSX.Eleme
       dispatch(fetchPromoFilmAction());
     }
   }, [dispatch, promoFilm]);
-
-
-  const [isPlaying, setIsPlaying] = useState(false);
-  const [videoLink, setVideoLink] = useState<string | null>(null);
-
-
-  const handlePlayClick = (link: string) => {
-    setVideoLink(link);
-    setIsPlaying(true);
-  };
 
 
   useEffect(() => {
@@ -64,9 +55,9 @@ function WelcomeScreen({filmsSmallCards, genres}: WelcomeScreenProps): JSX.Eleme
   }
 
 
-  if (isPlaying && videoLink) {
+  if (isPlaying && promoFilm) {
     return (
-      <PlayerFullScreen onExit={() => setIsPlaying(false)} videoLink={videoLink} />
+      <PlayerScreen />
     );
   }
 
@@ -79,7 +70,7 @@ function WelcomeScreen({filmsSmallCards, genres}: WelcomeScreenProps): JSX.Eleme
 
         <Header />
 
-        <Promo promoFilm={promoFilm} onPlay={handlePlayClick} />
+        <Promo promoFilm={promoFilm} />
 
 
       </section>

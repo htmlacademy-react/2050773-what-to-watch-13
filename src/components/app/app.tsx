@@ -51,7 +51,7 @@ function App({ genres }: AppScreenProps): JSX.Element {
           />
           <Route
             path={AppRoute.Player}
-            element={<PlayerScreen film={films[0]} />}
+            element={<PlayerScreen />}
           />
           <Route
             path={AppRoute.Film}

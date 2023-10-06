@@ -1,14 +1,14 @@
 import { TPromo } from '../../types/films';
+import VideoPlayButton from '../../components/video-play-button/video-play-button';
+
 
 type PromoProps = {
   promoFilm: TPromo;
-  onPlay: (videoLink: string) => void;
 };
 
-function Promo({promoFilm, onPlay}: PromoProps): JSX.Element {
+function Promo({promoFilm}: PromoProps): JSX.Element {
 
-
-  const {name, posterImage, backgroundImage, videoLink, genre, released } = promoFilm;
+  const {id, name, posterImage, backgroundImage, genre, released } = promoFilm;
 
   return(
 
@@ -31,12 +31,8 @@ function Promo({promoFilm, onPlay}: PromoProps): JSX.Element {
             </p>
 
             <div className="film-card__buttons">
-              <button className="btn btn--play film-card__button" type="button" onClick={() => onPlay(videoLink)}>
-                <svg viewBox="0 0 19 19" width="19" height="19">
-                  <use xlinkHref="#play-s"></use>
-                </svg>
-                <span>Play</span>
-              </button>
+              <VideoPlayButton id={id} />
+
               <button className="btn btn--list film-card__button" type="button">
                 <svg viewBox="0 0 19 20" width="19" height="20">
                   <use xlinkHref="#add"></use>

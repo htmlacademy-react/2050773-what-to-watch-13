@@ -17,6 +17,7 @@ import { useNavigate } from 'react-router-dom';
 import { AuthorizationStatus } from '../../const';
 import { getAuthorizationStatus } from '../../store/user-process/user-process.selector';
 import { isFilmDataLoading, getFilm } from '../../store/film-data/film-data.selectors';
+import VideoPlayButton from '../../components/video-play-button/video-play-button';
 
 
 type FilmCardProps = {
@@ -88,12 +89,8 @@ function FilmScreen({films}: FilmCardProps): JSX.Element {
               </p>
 
               <div className="film-card__buttons">
-                <button className="btn btn--play film-card__button" type="button">
-                  <svg viewBox="0 0 19 19" width="19" height="19">
-                    <use xlinkHref="#play-s"></use>
-                  </svg>
-                  <span>Play</span>
-                </button>
+                {id && <VideoPlayButton id={id} />}
+
                 <button className="btn btn--list film-card__button" type="button">
                   <svg viewBox="0 0 19 20" width="19" height="20">
                     <use xlinkHref="#add"></use>
