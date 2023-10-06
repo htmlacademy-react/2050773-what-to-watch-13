@@ -1,6 +1,6 @@
 import { TTab } from '../../types/tabs';
 import { TABS } from '../../const';
-import { TFilms } from '../../types/films';
+import { TFilm } from '../../types/films';
 import Overview from '../../components/overview/overview';
 import Details from '../../components/details/details';
 import Reviews from '../../components/reviews/reviews';
@@ -9,7 +9,7 @@ import Reviews from '../../components/reviews/reviews';
 type TabsProps = {
   activeTab: TTab;
   onTabClick: (tab: TTab) => void;
-  film: TFilms;
+  film: TFilm;
 }
 
 

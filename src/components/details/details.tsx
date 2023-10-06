@@ -1,11 +1,11 @@
-import { TFilms } from '../../types/films';
+import { TFilm } from '../../types/films';
 
 type DetailsProps = {
-  film: TFilms;
+  film: TFilm;
 }
 
 function Details({film}: DetailsProps): JSX.Element {
-  const { released, genre, director, runTime } = film;
+  const { released, genre, director, runTime, starring } = film;
   const hours = Math.floor(runTime / 60);
   const minutes = runTime % 60;
 
@@ -19,18 +19,14 @@ function Details({film}: DetailsProps): JSX.Element {
         <p className="film-card__details-item">
           <strong className="film-card__details-name">Starring</strong>
           <span className="film-card__details-value">
-              Bill Murray, <br/>
-              Edward Norton, <br/>
-              Jude Law, <br/>
-              Willem Dafoe, <br/>
-              Saoirse Ronan, <br/>
-              Tony Revoloru, <br/>
-              Tilda Swinton, <br/>
-              Tom Wilkinson, <br/>
-              Owen Wilkinson, <br/>
-              Adrien Brody, <br/>
-              Ralph Fiennes, <br/>
-              Jeff Goldblum
+            {
+              starring.map((star) => (
+                <>
+                  {star}
+                  <br/>
+                </>
+              ))
+            }
           </span>
         </p>
       </div>

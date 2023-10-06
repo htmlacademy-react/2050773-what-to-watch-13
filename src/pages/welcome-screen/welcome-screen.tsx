@@ -78,7 +78,7 @@ function WelcomeScreen({filmsSmallCards, genres}: WelcomeScreenProps): JSX.Eleme
 
         <section className="catalog">
           <h2 className="catalog__title visually-hidden">Catalog</h2>
-          <GenresList genres={genres} films={filmsSmallCards} />
+          <GenresList genres={genres} />
           {!isPlaying && <FilmCardsList films={filmsShowed} />}
         </section>
 
