@@ -1,8 +1,9 @@
 import { Link } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
 import { AppRoute } from '../../const';
+import { memo } from 'react';
 
-function Footer(): JSX.Element {
+function FooterRaw(): JSX.Element {
   const location = useLocation();
   const isIndexPage = location.pathname === AppRoute.Root;
 
@@ -33,5 +34,7 @@ function Footer(): JSX.Element {
     </footer>
   );
 }
+
+const Footer = memo(FooterRaw);
 
 export default Footer;

@@ -9,13 +9,13 @@ import ShowMoreButton from '../../components/show-more-button/show-more-button';
 import { useEffect, useState } from 'react';
 import { GenresNamespace } from '../../const';
 import Promo from '../../components/promo/promo';
-import { getGenre } from '../../store/films-process/films-process.selectors';
-import { resetDisplayFilmsCount, increaseDisplayFilmsCount } from '../../store/films-process/films-process.slice';
-import { getDisplayedFilmsCount } from '../../store/films-process/films-process.selectors';
+import { getGenre } from '../../store/app-process/app-process.selectors';
 import { getPromo } from '../../store/film-data/film-data.selectors';
 import { useAppDispatch } from '../../hooks/index';
 import { fetchPromoFilmAction } from '../../store/api-actions';
 import PlayerScreen from '../player-screen/player-screen';
+import { DISPLAYED_FILMS_COUNT } from '../../const';
+import { useMemo } from 'react';
 
 type WelcomeScreenProps = {
   filmsSmallCards: TFilmSmallCards;
@@ -25,11 +25,20 @@ type WelcomeScreenProps = {
 function WelcomeScreen({filmsSmallCards, genres}: WelcomeScreenProps): JSX.Element {
 
   const currentGenre = useAppSelector(getGenre);
-  const filmsByCurrentGenre = currentGenre === 'All genres' ? filmsSmallCards : filmsSmallCards.filter((filmItem) => filmItem.genre === GenresNamespace[currentGenre as keyof typeof GenresNamespace]);
   const promoFilm = useAppSelector(getPromo);
   const dispatch = useAppDispatch();
   const [isPlaying, setIsPlaying] = useState(false);
+  const [displayedFilmsCount, setDisplayedFilmsCount] = useState(DISPLAYED_FILMS_COUNT);
+  const [filmsToShow, setFilmsToShow] = useState<TFilmSmallCards>([]);
 
+  const allFilmsByCurrentGenre = useMemo(() => currentGenre === 'All genres'
+    ? filmsSmallCards
+    : filmsSmallCards.filter((film) => film.genre === GenresNamespace[currentGenre as keyof typeof GenresNamespace]), [currentGenre, filmsSmallCards]);
+
+
+  useEffect(() => {
+    setFilmsToShow(allFilmsByCurrentGenre.slice(0, displayedFilmsCount));
+  }, [currentGenre, filmsSmallCards, displayedFilmsCount, allFilmsByCurrentGenre]);
 
   useEffect(() => {
     if (!promoFilm) {
@@ -37,28 +46,17 @@ function WelcomeScreen({filmsSmallCards, genres}: WelcomeScreenProps): JSX.Eleme
     }
   }, [dispatch, promoFilm]);
 
-
-  useEffect(() => {
-    dispatch(resetDisplayFilmsCount());
-  }, [dispatch]); //сбрасывает счетчик до 8 каждый раз когда возвращаюсь на WelcomeScreen
-
-
   const handleShowMoreButtonClick = () => {
-    dispatch(increaseDisplayFilmsCount());
+    setDisplayedFilmsCount((prevCount) => prevCount + DISPLAYED_FILMS_COUNT);
   };
 
-  const displayedFilmsCount = useAppSelector(getDisplayedFilmsCount);
-  const filmsShowed = filmsByCurrentGenre.slice(0, displayedFilmsCount);
 
   if (!promoFilm) {
     return <p>Loading...</p>;
   }
 
-
   if (isPlaying && promoFilm) {
-    return (
-      <PlayerScreen />
-    );
+    return <PlayerScreen />;
   }
 
   return(
@@ -67,23 +65,19 @@ function WelcomeScreen({filmsSmallCards, genres}: WelcomeScreenProps): JSX.Eleme
         <Helmet>
           <title>WTW. Welcome!</title>
         </Helmet>
-
         <Header />
-
         <Promo promoFilm={promoFilm} />
-
-
       </section>
       <div className="page-content">
-
         <section className="catalog">
           <h2 className="catalog__title visually-hidden">Catalog</h2>
-          <GenresList genres={genres} />
-          {!isPlaying && <FilmCardsList films={filmsShowed} />}
+          <GenresList genres={genres} onGenreChange={() => setDisplayedFilmsCount(DISPLAYED_FILMS_COUNT)} />
+          {!isPlaying && <FilmCardsList films={filmsToShow} />}
         </section>
 
-        {filmsByCurrentGenre.length > displayedFilmsCount ? <ShowMoreButton onShowMoreButtonClick={handleShowMoreButtonClick} /> : null}
-
+        {filmsToShow.length < allFilmsByCurrentGenre.length
+          ? <ShowMoreButton onShowMoreButtonClick={handleShowMoreButtonClick} />
+          : null }
         <Footer />
       </div>
     </>

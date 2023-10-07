@@ -14,9 +14,8 @@ export type FilmsData = {
   isSimilarFilmsDataLoading: boolean;
 }
 
-export type FilmsProcess = {
+export type App = {
   genre: string;
-  displayedFilmsCount: number;
 }
 
 export type FilmData = {

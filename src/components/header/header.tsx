@@ -6,6 +6,7 @@ import { useAppSelector } from '../../hooks/index';
 import { useAppDispatch } from '../../hooks/index';
 import { logoutAction } from '../../store/api-actions';
 import { getAuthorizationStatus } from '../../store/user-process/user-process.selector';
+import { memo } from 'react';
 
 type HeaderSignInProps = {
   isSignInPage: boolean;
@@ -46,7 +47,7 @@ function HeaderSignAction({ isSignInPage, isAuthorized}: HeaderSignInProps): JSX
   );
 }
 
-function Header({children}: PropsWithChildren): JSX.Element {
+function HeaderRaw({children}: PropsWithChildren): JSX.Element {
   const {pathname} = useLocation();
   const isIndexPage = pathname === AppRoute.Root;
   const isSignInPage = pathname === AppRoute.SignIn;
@@ -85,6 +86,6 @@ function Header({children}: PropsWithChildren): JSX.Element {
 
   );
 }
+const Header = memo(HeaderRaw);
 
 export default Header;
-

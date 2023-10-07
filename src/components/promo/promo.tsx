@@ -1,12 +1,13 @@
 import { TPromo } from '../../types/films';
 import VideoPlayButton from '../../components/video-play-button/video-play-button';
+import { memo } from 'react';
 
 
 type PromoProps = {
   promoFilm: TPromo;
 };
 
-function Promo({promoFilm}: PromoProps): JSX.Element {
+function PromoRaw({promoFilm}: PromoProps): JSX.Element {
 
   const {id, name, posterImage, backgroundImage, genre, released } = promoFilm;
 
@@ -47,5 +48,7 @@ function Promo({promoFilm}: PromoProps): JSX.Element {
     </>
   );
 }
+
+const Promo = memo(PromoRaw);
 
 export default Promo;

@@ -1,20 +1,21 @@
 import classNames from 'classnames';
 import { useAppDispatch, useAppSelector } from '../../hooks/index';
-import { changeGenre, resetDisplayFilmsCount } from '../../store/films-process/films-process.slice';
-import { getGenre } from '../../store/films-process/films-process.selectors';
+import { changeGenre } from '../../store/app-process/app-process.slice';
+import { getGenre } from '../../store/app-process/app-process.selectors';
 
 type GenresListProps = {
   genres: string[];
+  onGenreChange: () => void;
 }
 
-function GenresList({genres}: GenresListProps): JSX.Element {
+function GenresList({genres, onGenreChange}: GenresListProps): JSX.Element {
   const dispatch = useAppDispatch();
   const activeGenre = useAppSelector(getGenre);
 
 
-  const handleGenreChange = (genre: string) => {
+  const handleGenreClick = (genre: string) => {
     dispatch(changeGenre(genre));
-    dispatch(resetDisplayFilmsCount()); //сбрасывает счетчик до 8 каждый раз когда меняю жанр
+    onGenreChange(); //сбрасывает счетчик до 8 каждый раз когда меняю жанр
   };
 
 
@@ -28,10 +29,7 @@ function GenresList({genres}: GenresListProps): JSX.Element {
           <a
             href="#"
             className="catalog__genres-link"
-            onClick={(evt) => {
-              evt.preventDefault();
-              handleGenreChange(genre);
-            }}
+            onClick={() => handleGenreClick(genre)}
           >
             {genre}
           </a>
