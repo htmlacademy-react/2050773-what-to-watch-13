@@ -10,12 +10,13 @@ import { useEffect, useState } from 'react';
 import { GenresNamespace } from '../../const';
 import Promo from '../../components/promo/promo';
 import { getGenre } from '../../store/app-process/app-process.selectors';
-import { getPromo } from '../../store/film-data/film-data.selectors';
+import { getPromo } from '../../store/films-data/films-data.selectors';
 import { useAppDispatch } from '../../hooks/index';
 import { fetchPromoFilmAction } from '../../store/api-actions';
 import PlayerScreen from '../player-screen/player-screen';
 import { DISPLAYED_FILMS_COUNT } from '../../const';
 import { useMemo } from 'react';
+import { fetchFavoritesAction } from '../../store/api-actions';
 
 type WelcomeScreenProps = {
   filmsSmallCards: TFilmSmallCards;
@@ -30,6 +31,11 @@ function WelcomeScreen({filmsSmallCards, genres}: WelcomeScreenProps): JSX.Eleme
   const [isPlaying, setIsPlaying] = useState(false);
   const [displayedFilmsCount, setDisplayedFilmsCount] = useState(DISPLAYED_FILMS_COUNT);
   const [filmsToShow, setFilmsToShow] = useState<TFilmSmallCards>([]);
+
+  useEffect(() => {
+    dispatch(fetchFavoritesAction());
+  }, [dispatch]);
+
 
   const allFilmsByCurrentGenre = useMemo(() => currentGenre === 'All genres'
     ? filmsSmallCards

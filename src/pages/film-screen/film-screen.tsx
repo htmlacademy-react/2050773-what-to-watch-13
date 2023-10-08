@@ -15,16 +15,16 @@ import NotFoundScreen from '../not-found-screen/not-found-screen';
 import { useNavigate } from 'react-router-dom';
 import { AuthorizationStatus } from '../../const';
 import { getAuthorizationStatus } from '../../store/user-process/user-process.selector';
-import { isFilmDataLoading, getFilm } from '../../store/film-data/film-data.selectors';
+import { isFilmDataLoading, getFilm } from '../../store/films-data/films-data.selectors';
 import VideoPlayButton from '../../components/video-play-button/video-play-button';
 import { getSimilarFilms } from '../../store/films-data/films-data.selectors';
+import MyListButton from '../../components/my-list-button/my-list-button';
 
 
 function FilmScreen(): JSX.Element {
   const {id} = useParams();
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-
 
   useEffect(() => {
     if (id) {
@@ -38,10 +38,6 @@ function FilmScreen(): JSX.Element {
   const isFilmLoading = useAppSelector(isFilmDataLoading);
   const [searchParams, setSearchParams] = useSearchParams();
   const similarFilms = useAppSelector(getSimilarFilms);
-
-  // console.log(similarFilms);
-
-
   const currentAuthorizationStatus = useAppSelector(getAuthorizationStatus);
 
 
@@ -54,7 +50,7 @@ function FilmScreen(): JSX.Element {
     return <NotFoundScreen />;
   }
 
-  const { name, genre, released, backgroundImage, backgroundColor, posterImage } = film;
+  const { name, genre, released, backgroundImage, backgroundColor, posterImage, isFavorite } = film;
 
   const handleAddReviewClick = () => {
     navigate(`/films/${film.id}/review`, { state: { film } });
@@ -75,7 +71,7 @@ function FilmScreen(): JSX.Element {
         </Helmet>
         <div className="film-card__hero">
           <div className="film-card__bg">
-            <img src={backgroundImage} alt="The Grand Budapest Hotel" />
+            <img src={backgroundImage} alt={name} />
           </div>
 
           <Header />
@@ -91,13 +87,8 @@ function FilmScreen(): JSX.Element {
               <div className="film-card__buttons">
                 {id && <VideoPlayButton id={id} />}
 
-                <button className="btn btn--list film-card__button" type="button">
-                  <svg viewBox="0 0 19 20" width="19" height="20">
-                    <use xlinkHref="#add"></use>
-                  </svg>
-                  <span>My list</span>
-                  <span className="film-card__count">9</span>
-                </button>
+                <MyListButton filmId={film.id} isFavorite={isFavorite} />
+
                 { currentAuthorizationStatus === AuthorizationStatus.Auth && (
                   <a className="btn film-card__button" onClick={handleAddReviewClick}>Add Review</a>
                 )}

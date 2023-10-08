@@ -1,6 +1,7 @@
 import { TPromo } from '../../types/films';
 import VideoPlayButton from '../../components/video-play-button/video-play-button';
 import { memo } from 'react';
+import MyListButton from '../my-list-button/my-list-button';
 
 
 type PromoProps = {
@@ -9,7 +10,7 @@ type PromoProps = {
 
 function PromoRaw({promoFilm}: PromoProps): JSX.Element {
 
-  const {id, name, posterImage, backgroundImage, genre, released } = promoFilm;
+  const {id, name, posterImage, backgroundImage, genre, released, isFavorite } = promoFilm;
 
   return(
 
@@ -33,14 +34,7 @@ function PromoRaw({promoFilm}: PromoProps): JSX.Element {
 
             <div className="film-card__buttons">
               <VideoPlayButton id={id} />
-
-              <button className="btn btn--list film-card__button" type="button">
-                <svg viewBox="0 0 19 20" width="19" height="20">
-                  <use xlinkHref="#add"></use>
-                </svg>
-                <span>My list</span>
-                <span className="film-card__count">9</span>
-              </button>
+              <MyListButton filmId={id} isFavorite={isFavorite} />
             </div>
           </div>
         </div>

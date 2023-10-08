@@ -1,7 +1,7 @@
 import { AxiosInstance } from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { AppDispatch, State } from '../types/state.js';
-import { TFilmSmallCards, TFilm, TPromo } from '../types/films.js';
+import { TFilmSmallCards, TFilm, TPromo, TFavoriteFilm } from '../types/films.js';
 import { redirectToRoute } from './action';
 import { saveToken, dropToken } from '../services/token';
 import { APIRoute, AppRoute } from '../const';
@@ -28,10 +28,34 @@ export const fetchSimilarFilmsAction = createAsyncThunk<TFilmSmallCards, string,
   extra: AxiosInstance;
 }>(
   'fetchSimilarFilms',
-  async (filmId, { extra: api}) => {
+  async (filmId, { extra: api }) => {
     const {data} = await api.get<TFilmSmallCards>(`${APIRoute.Films}/${filmId}/similar`);
     return data;
   },
+);
+
+export const fetchFavoritesAction = createAsyncThunk<TFilmSmallCards, undefined, {
+  dispatch: AppDispatch;
+  state: State;
+  extra: AxiosInstance;
+}>(
+  'fetchFavorites',
+  async (_arg, { extra: api }) => {
+    const {data} = await api.get<TFilmSmallCards>(APIRoute.Favorite);
+    return data;
+  }
+);
+
+export const fetchUploadFavoriteStatusAction = createAsyncThunk<TFavoriteFilm, {status: number; id: string}, {
+  dispatch: AppDispatch;
+  state: State;
+  extra: AxiosInstance;
+}>(
+  ' fetchUploadFavoriteStatus',
+  async({status, id}, {extra: api}) => {
+    const {data} = await api.post<TFavoriteFilm>(`${APIRoute.Favorite}/${id}/${status}`);
+    return data;
+  }
 );
 
 export const fetchReviewsAction = createAsyncThunk<TReviews, string, {
@@ -40,7 +64,7 @@ export const fetchReviewsAction = createAsyncThunk<TReviews, string, {
   extra: AxiosInstance;
 }>(
   'fetchReviews',
-  async (filmId: string, { extra: api}) => {
+  async (filmId: string, { extra: api }) => {
     const response = await api.get<TReviews>(`${APIRoute.Comments}/${filmId}`);
     return response.data;
   }

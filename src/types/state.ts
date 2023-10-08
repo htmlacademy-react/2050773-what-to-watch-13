@@ -12,17 +12,21 @@ export type FilmsData = {
   isFilmsDataLoading: boolean;
   similarFilms: TFilmSmallCards;
   isSimilarFilmsDataLoading: boolean;
+  film: TFilm | null;
+  isFilmDataLoading: boolean;
+  promo: TPromo | null;
+  isPromoFilmDataLoading: boolean;
+  areFavoriteFilmsloading: boolean;
+  favoriteFilms: TFilmSmallCards;
+  isFavoriteStatusUploading: boolean;
 }
 
 export type App = {
   genre: string;
 }
 
-export type FilmData = {
-  film: TFilm | null;
-  isFilmDataLoading: boolean;
-  promo: TPromo | null;
-  isPromoFilmDataLoading: boolean;
+
+export type Reviews = {
   reviews: TReviews;
   review: TReview | null;
 }

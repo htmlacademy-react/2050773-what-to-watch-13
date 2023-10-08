@@ -2,7 +2,7 @@ import { useAppDispatch, useAppSelector } from '../../hooks/index';
 import { fetchReviewsAction } from '../../store/api-actions';
 import { useParams } from 'react-router-dom';
 import { useEffect } from 'react';
-import { getReviews } from '../../store/film-data/film-data.selectors';
+import { getReviews } from '../../store/reviews-process/reviews-process.selectors';
 
 
 function Reviews(): JSX.Element {

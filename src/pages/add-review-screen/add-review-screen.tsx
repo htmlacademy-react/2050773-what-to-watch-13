@@ -6,8 +6,7 @@ import { useAppSelector, useAppDispatch, useFilmFromLocation } from '../../hooks
 import { useEffect } from 'react';
 import { fetchFilmByIdAction } from '../../store/api-actions';
 import { useParams } from 'react-router-dom';
-import { getFilm } from '../../store/film-data/film-data.selectors';
-
+import { getFilm } from '../../store/films-data/films-data.selectors';
 
 function AddReviewScreen(): JSX.Element {
   const filmFromState = useFilmFromLocation();

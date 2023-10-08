@@ -48,8 +48,8 @@ export enum GenresNamespace {
 export enum NameSpace {
   Films = 'FILMS',
   App = 'APP',
-  Film = 'FILM',
   User = 'USER',
+  Reviews = 'REVIEWS'
 }
 
 export const DEFAULT_GENRE = 'All genres';
