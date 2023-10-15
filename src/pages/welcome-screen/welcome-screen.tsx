@@ -9,14 +9,13 @@ import ShowMoreButton from '../../components/show-more-button/show-more-button';
 import { useEffect, useState } from 'react';
 import { GenresNamespace } from '../../const';
 import Promo from '../../components/promo/promo';
-import { getGenre } from '../../store/app-process/app-process.selectors';
 import { getPromo } from '../../store/films-data/films-data.selectors';
 import { useAppDispatch } from '../../hooks/index';
 import { fetchPromoFilmAction } from '../../store/api-actions';
 import PlayerScreen from '../player-screen/player-screen';
-import { DISPLAYED_FILMS_COUNT } from '../../const';
+import { DISPLAYED_FILMS_COUNT, DEFAULT_GENRE } from '../../const';
 import { useMemo } from 'react';
-import { fetchFavoritesAction } from '../../store/api-actions';
+
 
 type WelcomeScreenProps = {
   filmsSmallCards: TFilmSmallCards;
@@ -25,16 +24,13 @@ type WelcomeScreenProps = {
 
 function WelcomeScreen({filmsSmallCards, genres}: WelcomeScreenProps): JSX.Element {
 
-  const currentGenre = useAppSelector(getGenre);
+  // const currentGenre = useAppSelector(getGenre);
   const promoFilm = useAppSelector(getPromo);
   const dispatch = useAppDispatch();
   const [isPlaying, setIsPlaying] = useState(false);
   const [displayedFilmsCount, setDisplayedFilmsCount] = useState(DISPLAYED_FILMS_COUNT);
   const [filmsToShow, setFilmsToShow] = useState<TFilmSmallCards>([]);
-
-  useEffect(() => {
-    dispatch(fetchFavoritesAction());
-  }, [dispatch]);
+  const [currentGenre, setCurrentGenre] = useState(DEFAULT_GENRE);
 
 
   const allFilmsByCurrentGenre = useMemo(() => currentGenre === 'All genres'
@@ -54,6 +50,11 @@ function WelcomeScreen({filmsSmallCards, genres}: WelcomeScreenProps): JSX.Eleme
 
   const handleShowMoreButtonClick = () => {
     setDisplayedFilmsCount((prevCount) => prevCount + DISPLAYED_FILMS_COUNT);
+  };
+
+  const handleGenreChange = (genre: string) => {
+    setCurrentGenre(genre);
+    setDisplayedFilmsCount(DISPLAYED_FILMS_COUNT);
   };
 
 
@@ -77,7 +78,7 @@ function WelcomeScreen({filmsSmallCards, genres}: WelcomeScreenProps): JSX.Eleme
       <div className="page-content">
         <section className="catalog">
           <h2 className="catalog__title visually-hidden">Catalog</h2>
-          <GenresList genres={genres} onGenreChange={() => setDisplayedFilmsCount(DISPLAYED_FILMS_COUNT)} />
+          <GenresList genres={genres} currentGenre={currentGenre} onGenreChange={handleGenreChange} />
           {!isPlaying && <FilmCardsList films={filmsToShow} />}
         </section>
 

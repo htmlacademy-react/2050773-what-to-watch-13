@@ -5,10 +5,12 @@ import { Provider } from 'react-redux';
 import { store } from './store';
 import { GENRES } from './const';
 import { fetchFilmsAction, checkAuthAction } from './store/api-actions';
+import { fetchFavoritesAction } from './store/api-actions';
 
 
 store.dispatch(fetchFilmsAction());
 store.dispatch(checkAuthAction());
+store.dispatch(fetchFavoritesAction());
 
 
 const root = ReactDOM.createRoot(
