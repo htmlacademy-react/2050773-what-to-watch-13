@@ -47,7 +47,6 @@ export enum GenresNamespace {
 
 export enum NameSpace {
   Films = 'FILMS',
-  App = 'APP',
   User = 'USER',
   Reviews = 'REVIEWS'
 }

@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAppDispatch } from '../../hooks/index';
 import { loginAction } from '../../store/api-actions';
 import { AppRoute } from '../../const';
-import { isValidPassword } from '../../utils';
+import { isValidPassword } from '../../utils/utils';
 
 
 function SignInScreen(): JSX.Element {

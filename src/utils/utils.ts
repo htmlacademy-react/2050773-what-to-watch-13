@@ -1,5 +1,5 @@
-import { TFilmSmallCards } from './types/films';
-import { DEFAULT_GENRE } from './const';
+import { TFilmSmallCards } from '../types/films';
+import { DEFAULT_GENRE } from '../const';
 
 export function getCurrentGenresList(films: TFilmSmallCards): string[] {
   const uniqueGenres = Array.from(new Set(films.map((film) => film.genre)));
