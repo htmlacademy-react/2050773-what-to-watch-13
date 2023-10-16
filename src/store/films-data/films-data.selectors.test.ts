@@ -3,7 +3,7 @@ import { makeFakeFilm } from '../../utils/mocks';
 import { getFilms, getFilmsDataLoadingStatus } from './films-data.selectors';
 import { State } from '../../types/state';
 
-describe('GameData selectors', () => {
+describe('FilmsData selectors', () => {
   const mockFilm = makeFakeFilm();
   const state = {
     [NameSpace.Films]: {

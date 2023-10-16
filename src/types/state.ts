@@ -21,11 +21,6 @@ export type FilmsData = {
   isFavoriteStatusUploading: boolean;
 }
 
-export type App = {
-  genre: string;
-}
-
-
 export type Reviews = {
   reviews: TReviews;
   review: TReview | null;

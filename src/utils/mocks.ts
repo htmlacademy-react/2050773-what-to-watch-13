@@ -4,6 +4,7 @@ import { State } from '../types/state';
 import { createAPI } from '../services/api';
 import { Action } from 'redux';
 import { TFilmSmallCard } from '../types/films';
+import { TReview } from '../types/review';
 
 export type AppThunkDispatch = ThunkDispatch<State, ReturnType<typeof createAPI>, Action>;
 
@@ -15,4 +16,13 @@ export const makeFakeFilm = (): TFilmSmallCard => ({
   previewImage: system.filePath(),
   previewVideoLink: internet.url(),
   genre: random.word(),
+});
+
+
+export const makeFakeReview = (): TReview => ({
+  id: crypto.randomUUID(),
+  date: random.word(),
+  user: random.word(),
+  comment: random.words(),
+  rating: 1,
 });
