@@ -25,7 +25,7 @@ function PlayerFullScreen(): JSX.Element {
   function getFormatRunTime(time: number) {
     const date = dayjs.duration(time);
 
-    return `${date.minutes()}:${date.seconds()}:${date.milliseconds()}`;
+    return `${date.minutes()}:${date.seconds().toString().padStart(2, '0')}:${date.milliseconds().toString().padStart(2, '0')}`;
   }
 
   useEffect(() => {
