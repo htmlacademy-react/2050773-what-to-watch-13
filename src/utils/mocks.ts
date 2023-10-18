@@ -6,6 +6,7 @@ import { Action } from 'redux';
 import { TFilmSmallCard } from '../types/films';
 import { TReview } from '../types/review';
 
+
 export type AppThunkDispatch = ThunkDispatch<State, ReturnType<typeof createAPI>, Action>;
 
 export const extractActionsTypes = (actions: Action<string>[]) => actions.map(({type}) => type);
