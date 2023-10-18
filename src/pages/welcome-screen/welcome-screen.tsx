@@ -15,6 +15,7 @@ import { fetchPromoFilmAction } from '../../store/api-actions';
 import PlayerScreen from '../player-screen/player-screen';
 import { DISPLAYED_FILMS_COUNT, DEFAULT_GENRE } from '../../const';
 import { useMemo } from 'react';
+import LoadingScreen from '../loading-screen/loading-screen';
 
 
 type WelcomeScreenProps = {
@@ -24,7 +25,6 @@ type WelcomeScreenProps = {
 
 function WelcomeScreen({filmsSmallCards, genres}: WelcomeScreenProps): JSX.Element {
 
-  // const currentGenre = useAppSelector(getGenre);
   const promoFilm = useAppSelector(getPromo);
   const dispatch = useAppDispatch();
   const [isPlaying, setIsPlaying] = useState(false);
@@ -59,7 +59,7 @@ function WelcomeScreen({filmsSmallCards, genres}: WelcomeScreenProps): JSX.Eleme
 
 
   if (!promoFilm) {
-    return <p>Loading...</p>;
+    return <LoadingScreen />;
   }
 
   if (isPlaying && promoFilm) {
