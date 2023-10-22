@@ -17,9 +17,11 @@ const initialState: FilmsData = {
   areFavoriteFilmsloading: true,
   favoriteFilms: [],
   isFavoriteStatusUploading: true,
-  hasFilmsError: false,
+  haveFilmsError: false,
   hasSimilarError: false,
   hasFilmCardError: false,
+  hasFavoritesError: false,
+  hasChangeStatusError: false
 };
 
 export const filmsData = createSlice({
@@ -29,18 +31,18 @@ export const filmsData = createSlice({
   extraReducers(builder) {
     builder
       .addCase(fetchFilmsAction.pending, (state) => {
-        state.hasFilmsError = false;
+        state.haveFilmsError = false;
         state.isFilmsDataLoading = true;
       })
       .addCase(fetchFilmsAction.fulfilled, (state, action) => {
         state.films = action.payload;
         state.isFilmsDataLoading = false;
-        state.hasFilmsError = false;
+        state.haveFilmsError = false;
       })
       .addCase(fetchFilmsAction.rejected, (state) => {
         state.films = [];
         state.isFilmsDataLoading = false;
-        state.hasFilmsError = true;
+        state.haveFilmsError = true;
       })
       .addCase(fetchSimilarFilmsAction.pending, (state) => {
         state.isSimilarFilmsDataLoading = true;
@@ -86,6 +88,7 @@ export const filmsData = createSlice({
       .addCase(fetchFavoritesAction.rejected, (state) => {
         state.favoriteFilms = [];
         state.areFavoriteFilmsloading = false;
+        state.hasFavoritesError = true;
       })
       .addCase(fetchUploadFavoriteStatusAction.pending, (state) => {
         state.isFavoriteStatusUploading = true;
@@ -114,6 +117,7 @@ export const filmsData = createSlice({
         })
       .addCase(fetchUploadFavoriteStatusAction.rejected, (state) => {
         state.isFavoriteStatusUploading = false;
+        state.hasChangeStatusError = true;
       });
   }
 });

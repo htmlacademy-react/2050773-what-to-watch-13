@@ -7,6 +7,7 @@ import { useEffect } from 'react';
 import { fetchFilmByIdAction } from '../../store/api-actions';
 import { useParams } from 'react-router-dom';
 import { getFilm } from '../../store/films-data/films-data.selectors';
+import NotFoundScreen from '../not-found-screen/not-found-screen';
 
 function AddReviewScreen(): JSX.Element {
   const filmFromState = useFilmFromLocation();
@@ -22,9 +23,10 @@ function AddReviewScreen(): JSX.Element {
     }
   }, [id, dispatch, filmFromState]);
 
-  if (!film) {
-    return <p>Loading...</p>;
+  if(!film) {
+    return <NotFoundScreen />;
   }
+
 
   return(
     <section className="film-card film-card--full" style={{background: film.backgroundColor}}>

@@ -2,6 +2,11 @@ import { TPromo } from '../../types/films';
 import VideoPlayButton from '../../components/video-play-button/video-play-button';
 import { memo } from 'react';
 import MyListButton from '../my-list-button/my-list-button';
+import { getAuthorizationStatus } from '../../store/user-process/user-process.selector';
+import { useAppSelector } from '../../hooks/index';
+import { AuthorizationStatus } from '../../const';
+import ErrorMessage from '../error-message/error-message';
+import { getChangeStatusError } from '../../store/films-data/films-data.selectors';
 
 
 type PromoProps = {
@@ -11,6 +16,9 @@ type PromoProps = {
 function PromoRaw({promoFilm}: PromoProps): JSX.Element {
 
   const {id, name, posterImage, backgroundImage, genre, released, isFavorite } = promoFilm;
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
+  const isAuthorized = authorizationStatus === AuthorizationStatus.Auth;
+  const hasChangeStatusError = useAppSelector(getChangeStatusError);
 
 
   return(
@@ -35,8 +43,9 @@ function PromoRaw({promoFilm}: PromoProps): JSX.Element {
 
             <div className="film-card__buttons">
               <VideoPlayButton id={id} />
-              <MyListButton filmId={id} isFavorite={isFavorite} />
+              <MyListButton filmId={id} isFavorite={isFavorite} isAuthorized={isAuthorized} />
             </div>
+            {hasChangeStatusError && <ErrorMessage />}
           </div>
         </div>
       </div>

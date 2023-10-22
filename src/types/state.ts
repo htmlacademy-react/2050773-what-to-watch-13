@@ -20,9 +20,11 @@ export type FilmsData = {
   areFavoriteFilmsloading: boolean;
   favoriteFilms: TFilmSmallCards;
   isFavoriteStatusUploading: boolean;
-  hasFilmsError: boolean;
+  haveFilmsError: boolean;
   hasSimilarError: boolean;
   hasFilmCardError: boolean;
+  hasFavoritesError: boolean;
+  hasChangeStatusError: boolean;
 }
 
 export type Reviews = {

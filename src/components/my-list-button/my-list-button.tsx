@@ -10,9 +10,10 @@ import { getAuthorizationStatus } from '../../store/user-process/user-process.se
 type MyListButtonProps = {
   filmId: string;
   isFavorite: boolean;
+  isAuthorized: boolean;
 }
 
-function MyListButton({filmId, isFavorite}: MyListButtonProps): JSX.Element {
+function MyListButton({filmId, isFavorite, isAuthorized}: MyListButtonProps): JSX.Element | null {
   const dispatch = useAppDispatch();
   const favoritesCount = useAppSelector(getFavoritesCount);
   const currentAuthorizationStatus = useAppSelector(getAuthorizationStatus);
@@ -30,14 +31,16 @@ function MyListButton({filmId, isFavorite}: MyListButtonProps): JSX.Element {
     }
   };
 
-  return(
-    <button className="btn btn--list film-card__button" type="button" onClick={handleButtonClick}>
-      <svg viewBox="0 0 19 20" width="19" height="20">
-        <use xlinkHref={isFavorite ? '#in-list' : '#add'}></use>
-      </svg>
-      <span>My list</span>
-      <span className="film-card__count">{favoritesCount}</span>
-    </button>
+  return (
+    isAuthorized ? (
+      <button className="btn btn--list film-card__button" type="button" onClick={handleButtonClick}>
+        <svg viewBox="0 0 19 20" width="19" height="20">
+          <use xlinkHref={isFavorite ? '#in-list' : '#add'}></use>
+        </svg>
+        <span>My list</span>
+        <span className="film-card__count">{favoritesCount}</span>
+      </button>
+    ) : null
   );
 }
 

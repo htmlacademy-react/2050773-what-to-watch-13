@@ -55,9 +55,3 @@ export type TFavoriteFilm = {
   released: number;
   isFavorite: boolean;
 }
-
-
-export type ErrorDetails = {
-  message: string;
-  code: number;
-};

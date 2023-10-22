@@ -2,7 +2,7 @@ import { Fragment, useState, ChangeEvent, FormEvent, useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks/index';
 import { fetchSendCommentAction } from '../../store/api-actions';
 import { validateComment } from '../../utils/utils';
-import { getCommentSendingErrorStatus, getCommentSendingStatus } from '../../store/reviews-process/reviews-process.selectors';
+import { getReviewsSendingErrorStatus, getReviewsSendingStatus } from '../../store/reviews-process/reviews-process.selectors';
 
 
 const REVIEW_TEXT = 'review-text';
@@ -13,8 +13,8 @@ type AddReviewProps = {
 
 function AddReview({ id }: AddReviewProps): JSX.Element {
   const dispatch = useAppDispatch();
-  const isSending = useAppSelector(getCommentSendingStatus);
-  const isCommentSendingError = useAppSelector(getCommentSendingErrorStatus);
+  const isSending = useAppSelector(getReviewsSendingStatus);
+  const isCommentSendingError = useAppSelector(getReviewsSendingErrorStatus);
   const [hasError, setHasError] = useState(false);
 
   useEffect(() => {

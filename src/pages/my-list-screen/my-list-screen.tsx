@@ -3,11 +3,19 @@ import { Helmet } from 'react-helmet-async';
 import Footer from '../../components/footer/footer';
 import { getFavorites, getFavoritesCount } from '../../store/films-data/films-data.selectors';
 import { useAppSelector } from '../../hooks/index';
-import FilmCardsList from '../../components/film-cards-list/film-cards-list';
+import FavoritesCardsList from '../../components/favorites-cards-list/favorites-cards-list';
+import ErrorMessage from '../../components/error-message/error-message';
+import { getFavoritesErrorStatus } from '../../store/films-data/films-data.selectors';
 
 function MyListScreen(): JSX.Element {
   const favoriteFilms = useAppSelector(getFavorites);
   const favoriteFilmsCount = useAppSelector(getFavoritesCount);
+  const hasError = useAppSelector(getFavoritesErrorStatus);
+
+
+  if(hasError) {
+    return <ErrorMessage />;
+  }
 
 
   return(
@@ -22,7 +30,7 @@ function MyListScreen(): JSX.Element {
         <h2 className="catalog__title visually-hidden">Catalog</h2>
 
         <div className="catalog__films-list">
-          <FilmCardsList films={favoriteFilms} />
+          <FavoritesCardsList films={favoriteFilms} />
         </div>
       </section>
       <Footer />
