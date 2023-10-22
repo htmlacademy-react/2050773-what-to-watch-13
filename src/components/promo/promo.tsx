@@ -12,6 +12,7 @@ function PromoRaw({promoFilm}: PromoProps): JSX.Element {
 
   const {id, name, posterImage, backgroundImage, genre, released, isFavorite } = promoFilm;
 
+
   return(
 
     <>

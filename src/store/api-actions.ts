@@ -77,8 +77,9 @@ export const fetchSendCommentAction = createAsyncThunk<TReview, {rating: number;
   extra: AxiosInstance;
 }>(
   'fetchSendComment',
-  async ({filmId, rating, comment}, {extra: api}) => {
+  async ({filmId, rating, comment}, {dispatch, extra: api}) => {
     const { data } = await api.post<TReview>(`${APIRoute.Comments}/${filmId}`, {rating, comment});
+    dispatch(redirectToRoute(AppRoute.Film.replace(':id', filmId) as AppRoute));
     return(data);
   },
 );
@@ -95,6 +96,7 @@ export const fetchFilmByIdAction = createAsyncThunk<TFilm, string, {
   },
 );
 
+
 export const fetchPromoFilmAction = createAsyncThunk<TPromo, undefined, {
   dispatch: AppDispatch;
   state: State;
@@ -108,28 +110,31 @@ export const fetchPromoFilmAction = createAsyncThunk<TPromo, undefined, {
 );
 
 
-export const checkAuthAction = createAsyncThunk<void, undefined, {
+export const checkAuthAction = createAsyncThunk<UserData['avatarUrl'], undefined, {
   dispatch: AppDispatch;
   state: State;
   extra: AxiosInstance;
 }>(
   'checkAuth',
   async (_arg, {extra: api}) => {
-    await api.get(APIRoute.Login);
-  },
+    const {data: {avatarUrl}} = await api.get<UserData>(APIRoute.Login);
+
+    return avatarUrl;
+  }
 );
 
-
-export const loginAction = createAsyncThunk<void, AuthData, {
+export const loginAction = createAsyncThunk<UserData['avatarUrl'], AuthData, {
   dispatch: AppDispatch;
   state: State;
   extra: AxiosInstance;
 }>(
   'login',
   async ({login: email, password}, {dispatch, extra: api}) => {
-    const {data: {token}} = await api.post<UserData>(APIRoute.Login, {email, password});
+    const {data: {token, avatarUrl}} = await api.post<UserData>(APIRoute.Login, {email, password});
     saveToken(token);
     dispatch(redirectToRoute(AppRoute.Root));
+
+    return avatarUrl;
   },
 );
 

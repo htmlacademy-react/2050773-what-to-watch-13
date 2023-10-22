@@ -17,6 +17,9 @@ const initialState: FilmsData = {
   areFavoriteFilmsloading: true,
   favoriteFilms: [],
   isFavoriteStatusUploading: true,
+  hasFilmsError: false,
+  hasSimilarError: false,
+  hasFilmCardError: false,
 };
 
 export const filmsData = createSlice({
@@ -26,33 +29,45 @@ export const filmsData = createSlice({
   extraReducers(builder) {
     builder
       .addCase(fetchFilmsAction.pending, (state) => {
+        state.hasFilmsError = false;
         state.isFilmsDataLoading = true;
       })
       .addCase(fetchFilmsAction.fulfilled, (state, action) => {
         state.films = action.payload;
         state.isFilmsDataLoading = false;
+        state.hasFilmsError = false;
       })
       .addCase(fetchFilmsAction.rejected, (state) => {
         state.films = [];
         state.isFilmsDataLoading = false;
+        state.hasFilmsError = true;
       })
       .addCase(fetchSimilarFilmsAction.pending, (state) => {
         state.isSimilarFilmsDataLoading = true;
+        state.hasSimilarError = false;
       })
       .addCase(fetchSimilarFilmsAction.fulfilled, (state, action) => {
         state.similarFilms = action.payload;
         state.isSimilarFilmsDataLoading = false;
+        state.hasSimilarError = false;
       })
       .addCase(fetchSimilarFilmsAction.rejected, (state) => {
         state.similarFilms = [];
         state.isSimilarFilmsDataLoading = false;
+        state.hasSimilarError = true;
       })
       .addCase(fetchFilmByIdAction.pending, (state) => {
         state.isFilmDataLoading = true;
+        state.hasFilmCardError = false;
       })
       .addCase(fetchFilmByIdAction.fulfilled, (state, action) => {
         state.isFilmDataLoading = false;
         state.film = action.payload;
+        state.hasFilmCardError = false;
+      })
+      .addCase(fetchFilmByIdAction.rejected, (state) => {
+        state.isFilmDataLoading = false;
+        state.hasFilmCardError = true;
       })
       .addCase(fetchPromoFilmAction.pending, (state) => {
         state.isPromoFilmDataLoading = true;

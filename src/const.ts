@@ -19,8 +19,6 @@ export enum TABS {
   REVIEWS = 'Reviews'
 }
 
-export const GENRES = ['All genres', 'Comedies', 'Crime', 'Documentary', 'Dramas', 'Horror', 'Kids & Family', 'Romance', 'Sci-Fi', 'Thrillers'];
-
 export const DISPLAYED_FILMS_COUNT = 8;
 
 export enum APIRoute {
@@ -31,8 +29,6 @@ export enum APIRoute {
   Logout = '/logout',
   Comments = '/comments'
 }
-
-export const TIMEOUT_SHOW_ERROR = 2000;
 
 export const BACKEND_URL = 'https://13.design.pages.academy/wtw';
 
@@ -52,3 +48,13 @@ export enum NameSpace {
 }
 
 export const DEFAULT_GENRE = 'All genres';
+
+export const MAX_GENRES_COUNT = 9;
+
+export const MAX_SIMILAR_FILMS_COUNT = 4;
+
+export const ReviewLength = {
+  MIN_LENGTH: 50,
+  MAX_LENGTH: 400,
+};
+

@@ -5,6 +5,7 @@ import {AuthorizationStatus} from '../const';
 
 export type UserProcess = {
   authorizationStatus: AuthorizationStatus;
+  avatar: string;
 };
 
 export type FilmsData = {
@@ -19,17 +20,23 @@ export type FilmsData = {
   areFavoriteFilmsloading: boolean;
   favoriteFilms: TFilmSmallCards;
   isFavoriteStatusUploading: boolean;
+  hasFilmsError: boolean;
+  hasSimilarError: boolean;
+  hasFilmCardError: boolean;
 }
 
 export type Reviews = {
   reviews: TReviews;
   review: TReview | null;
+  isReviewsLoading: boolean;
+  hasReviewsError: boolean;
+  isReviewSending: boolean;
+  hasReviewSendingError: boolean;
 }
 
-export type State = ReturnType<typeof store.getState>; // псевдоним типа, равный структуре нашего хранилища
+export type State = ReturnType<typeof store.getState>;
 
-export type AppDispatch = typeof store.dispatch; // чтобы при диспатче мы получали информацию о типах, потом будем использовать с хуками, которые будут диспатчить наши действия.
-
+export type AppDispatch = typeof store.dispatch;
 export type LocationState = {
   film?: TFilm;
 };

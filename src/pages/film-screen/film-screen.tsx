@@ -13,9 +13,9 @@ import { fetchFilmByIdAction, fetchSimilarFilmsAction } from '../../store/api-ac
 import LoadingScreen from '../loading-screen/loading-screen';
 import NotFoundScreen from '../not-found-screen/not-found-screen';
 import { useNavigate } from 'react-router-dom';
-import { AuthorizationStatus } from '../../const';
+import { AuthorizationStatus, MAX_SIMILAR_FILMS_COUNT } from '../../const';
 import { getAuthorizationStatus } from '../../store/user-process/user-process.selector';
-import { isFilmDataLoading, getFilm } from '../../store/films-data/films-data.selectors';
+import { isFilmDataLoading, getFilm, getFilmErrorStatus } from '../../store/films-data/films-data.selectors';
 import VideoPlayButton from '../../components/video-play-button/video-play-button';
 import { getSimilarFilms } from '../../store/films-data/films-data.selectors';
 import MyListButton from '../../components/my-list-button/my-list-button';
@@ -37,11 +37,12 @@ function FilmScreen(): JSX.Element {
   const film = useAppSelector(getFilm);
   const isFilmLoading = useAppSelector(isFilmDataLoading);
   const [searchParams, setSearchParams] = useSearchParams();
-  const similarFilms = useAppSelector(getSimilarFilms);
+  const similarFilms = useAppSelector(getSimilarFilms).slice(0, MAX_SIMILAR_FILMS_COUNT);
   const currentAuthorizationStatus = useAppSelector(getAuthorizationStatus);
+  const hasFilmError = useAppSelector(getFilmErrorStatus);
 
 
-  if (isFilmLoading) {
+  if (isFilmLoading && !hasFilmError) {
     return(<LoadingScreen />
     );
   }
@@ -104,7 +105,7 @@ function FilmScreen(): JSX.Element {
             </div>
 
             <div className="film-card__desc">
-              <Tabs activeTab={activeTab} onTabClick={handleTabClick} film={film} />
+              <Tabs activeTab={activeTab as TTab} onTabClick={handleTabClick} film={film} />
             </div>
 
           </div>

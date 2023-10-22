@@ -18,29 +18,22 @@ import { getFilmsDataLoadingStatus } from '../../store/films-data/films-data.sel
 import { getFilms } from '../../store/films-data/films-data.selectors';
 
 
-type AppScreenProps = {
-  genres: string[];
-}
-
-
-function App({ genres }: AppScreenProps): JSX.Element {
+function App(): JSX.Element {
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
   const isFilmsDataLoading = useAppSelector(getFilmsDataLoadingStatus);
   const films = useAppSelector(getFilms);
 
-  if (authorizationStatus === AuthorizationStatus.Unknown || isFilmsDataLoading) {
-    return (
-      <LoadingScreen />
-    );
-  }
-
-  return(
+  return (
     <HelmetProvider>
       <HistoryRouter history={browserHistory}>
         <Routes>
           <Route
             path={AppRoute.Root}
-            element={<WelcomeScreen genres={genres} filmsSmallCards={films} />}
+            element={
+              authorizationStatus === AuthorizationStatus.Unknown || isFilmsDataLoading ?
+                <LoadingScreen /> :
+                <WelcomeScreen filmsSmallCards={films} />
+            }
           />
           <Route
             path={AppRoute.SignIn}

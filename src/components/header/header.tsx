@@ -7,6 +7,7 @@ import { useAppDispatch } from '../../hooks/index';
 import { logoutAction } from '../../store/api-actions';
 import { getAuthorizationStatus } from '../../store/user-process/user-process.selector';
 import { memo } from 'react';
+import { getUserAvatar } from '../../store/user-process/user-process.selector';
 
 type HeaderSignInProps = {
   isSignInPage: boolean;
@@ -16,6 +17,8 @@ type HeaderSignInProps = {
 
 function HeaderSignAction({ isSignInPage, isAuthorized}: HeaderSignInProps): JSX.Element {
   const dispatch = useAppDispatch();
+  const userAvatar = useAppSelector(getUserAvatar);
+
 
   if(isSignInPage) {
     return (
@@ -28,7 +31,7 @@ function HeaderSignAction({ isSignInPage, isAuthorized}: HeaderSignInProps): JSX
       <li className="user-block__item">
         <Link to={AppRoute.MyList}>
           <div className="user-block__avatar">
-            <img src="img/avatar.jpg" alt="User avatar" width="63" height="63" />
+            <img src={userAvatar} alt="User avatar" width="63" height="63" />
           </div>
         </Link>
       </li>
