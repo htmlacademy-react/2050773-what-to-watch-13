@@ -2,31 +2,28 @@ import { useState, useRef, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../hooks/index';
 import { useNavigate } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
 import { fetchFilmByIdAction } from '../../store/api-actions';
 import { getFilm } from '../../store/films-data/films-data.selectors';
 import { isFilmDataLoading } from '../../store/films-data/films-data.selectors';
 import LoadingScreen from '../loading-screen/loading-screen';
 import NotFoundScreen from '../not-found-screen/not-found-screen';
-import { AppRoute } from '../../const';
-import dayjs from 'dayjs';
-import duration from 'dayjs/plugin/duration';
-
-dayjs.extend(duration);
+import { getFormatRunTime } from '../../utils/utils';
 
 
 function PlayerFullScreen(): JSX.Element {
-  const {id} = useParams();
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const {id} = useParams();
+  const filmCard = useAppSelector(getFilm);
+  const isLoading = useAppSelector(isFilmDataLoading);
   const [isPause, setIsPause] = useState(false);
-  const [timeLeft, setTimeLeft] = useState(0);
-  const [timeUpdate, setTimeUpdate] = useState(0);
+  const [timeData, setTimeData] = useState({
+    timeLeft: 0,
+    timeUpdate: 0,
+  });
 
-  function getFormatRunTime(time: number) {
-    const date = dayjs.duration(time);
-
-    return `-${date.seconds().toString().padStart(2, '0')}:${date.milliseconds().toString().padStart(2, '0')}`;
-  }
+  const videoRef = useRef<null | HTMLVideoElement>(null);
 
   useEffect(() => {
     if (id) {
@@ -34,102 +31,82 @@ function PlayerFullScreen(): JSX.Element {
     }
   }, [id, dispatch]);
 
-
-  const film = useAppSelector(getFilm);
-  const isFilmLoading = useAppSelector(isFilmDataLoading);
-
-  const videoRef = useRef<HTMLVideoElement | null>(null);
-  const [isPlaying, setIsPlaying] = useState(true);
-
-  const handleTogglePlayback = () => {
-    if (videoRef.current) {
-      if (isPlaying || isPause) {
-        videoRef.current.pause();
-        setIsPause(false); // reset isPause when play button is clicked
-      } else {
-        videoRef.current.play();
-      }
-      setIsPlaying(!isPlaying);
-    }
-  };
-
-  if (isFilmLoading) {
-    return(<LoadingScreen />
-    );
+  if (isLoading) {
+    return <LoadingScreen />;
   }
 
-  if (!film) {
+  if (!filmCard || !id) {
     return <NotFoundScreen />;
   }
 
-  const handleVideoTimeUpdate = () => {
+  const togglePlay = () => {
     if (videoRef.current) {
-      setTimeLeft(Math.floor(videoRef.current.duration - videoRef.current.currentTime));
-      setTimeUpdate(Math.ceil(videoRef.current.currentTime * 100 / videoRef.current.duration));
+      if (isPause) {
+        videoRef.current.play();
+      } else {
+        videoRef.current.pause();
+      }
+      setIsPause(!isPause);
     }
   };
 
-  const handleVideoEnd = () => {
-    setIsPause(true);
-    setIsPlaying(false);
+  const handleVideoTimeUpdate = () => {
+    if (videoRef.current) {
+      setTimeData({
+        timeLeft: Math.floor(videoRef.current.duration - videoRef.current.currentTime),
+        timeUpdate: Math.ceil(videoRef.current.currentTime * 100 / videoRef.current.duration),
+      });
+
+      if(videoRef.current.duration === videoRef.current.currentTime) {
+        setIsPause(true);
+      }
+    }
   };
 
-
-  return(
+  return (
     <div className="player">
+      <Helmet>
+        <title>{`WTW. Player ${filmCard.name}`}</title>
+      </Helmet>
       <video
+        src={filmCard.videoLink}
         ref={videoRef}
         onTimeUpdate={handleVideoTimeUpdate}
-        onEnded={handleVideoEnd}
-        src={film.videoLink}
         className="player__video"
-        poster="img/player-poster.jpg"
-        autoPlay
-      >
-      </video>
+        muted autoPlay
+        poster={filmCard.posterImage}
+      />
       <button
         type="button"
         className="player__exit"
         onClick={() => {
-          if (id) {
-            navigate(AppRoute.Film.replace(':id', id));
-          } else {
-            navigate(AppRoute.Root);
-          }
-
+          navigate(-1);
         }}
       >Exit
       </button>
-
       <div className="player__controls">
         <div className="player__controls-row">
           <div className="player__time">
-            <progress className="player__progress" value={timeUpdate} max={100}></progress>
-            <div className="player__toggler" style={{left: `${timeUpdate}%`}}>Toggler</div>
+            <progress className="player__progress" value={timeData.timeUpdate} max={100}></progress>
+            <div className="player__toggler" style={{left: `${timeData.timeUpdate}%`}}>Toggler</div>
           </div>
-          <div className="player__time-value">{getFormatRunTime(timeLeft)}</div>
+          <div className="player__time-value">{getFormatRunTime(timeData.timeLeft)}</div>
         </div>
 
         <div className="player__controls-row">
-          <button type="button" className="player__play" onClick={handleTogglePlayback}>
-            {isPlaying ? (
-              <>
-                <svg viewBox="0 0 14 21" width="14" height="21">
-                  <use xlinkHref="#pause"></use>
-                </svg>
-                <span>Pause</span>
-              </>
-            ) : (
-              <>
-                <svg viewBox="0 0 19 19" width="19" height="19">
-                  <use xlinkHref="#play-s"></use>
-                </svg>
-                <span>Play</span>
-              </>
-            )}
+          <button
+            type="button"
+            className="player__play"
+            onClick={() => {
+              togglePlay();
+            }}
+          >
+            <svg viewBox="0 0 19 19" width="19" height="19">
+              <use xlinkHref={isPause ? '#play-s' : '#pause'}></use>
+            </svg>
+            <span>{isPause ? 'Play' : 'Pause'}</span>
           </button>
-          <div className="player__name">{film.name}</div>
-
+          <div className="player__name">{filmCard.name}</div>
 
           <button
             type="button"

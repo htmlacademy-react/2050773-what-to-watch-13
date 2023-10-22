@@ -34,13 +34,6 @@ export const BACKEND_URL = 'https://13.design.pages.academy/wtw';
 
 export const REQUEST_TIMEOUT = 5000;
 
-export enum GenresNamespace {
-  Comedies = 'Comedy',
-  Crime = 'Crime',
-  Dramas = 'Drama',
-  Thrillers = 'Thriller',
-}
-
 export enum NameSpace {
   Films = 'FILMS',
   User = 'USER',
@@ -58,3 +51,7 @@ export const ReviewLength = {
   MAX_LENGTH: 400,
 };
 
+export const DateFormat = {
+  DATE_TIME_FORMAT: 'YYYY-MM-DD',
+  REVIEW_DATE_FORMAT: 'MMMM DD, YYYY',
+};

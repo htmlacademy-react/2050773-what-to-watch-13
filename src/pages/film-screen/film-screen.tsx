@@ -40,6 +40,7 @@ function FilmScreen(): JSX.Element {
   const similarFilms = useAppSelector(getSimilarFilms).slice(0, MAX_SIMILAR_FILMS_COUNT);
   const currentAuthorizationStatus = useAppSelector(getAuthorizationStatus);
   const hasFilmError = useAppSelector(getFilmErrorStatus);
+  const isAuthorized = currentAuthorizationStatus === AuthorizationStatus.Auth;
 
 
   if (isFilmLoading && !hasFilmError) {
@@ -88,7 +89,7 @@ function FilmScreen(): JSX.Element {
               <div className="film-card__buttons">
                 {id && <VideoPlayButton id={id} />}
 
-                <MyListButton filmId={film.id} isFavorite={isFavorite} />
+                <MyListButton filmId={film.id} isFavorite={isFavorite} isAuthorized={isAuthorized} />
 
                 { currentAuthorizationStatus === AuthorizationStatus.Auth && (
                   <a className="btn film-card__button" onClick={handleAddReviewClick}>Add Review</a>

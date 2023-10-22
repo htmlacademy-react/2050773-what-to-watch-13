@@ -3,6 +3,10 @@ import { fetchReviewsAction } from '../../store/api-actions';
 import { useParams } from 'react-router-dom';
 import { useEffect } from 'react';
 import { getReviews } from '../../store/reviews-process/reviews-process.selectors';
+import { getDataFormat } from '../../utils/utils';
+import { DateFormat } from '../../const';
+import { getReviewsErrorStatus } from '../../store/reviews-process/reviews-process.selectors';
+import ErrorMessage from '../error-message/error-message';
 
 function Reviews(): JSX.Element {
 
@@ -10,6 +14,7 @@ function Reviews(): JSX.Element {
 
   const dispatch = useAppDispatch();
   const reviews = useAppSelector(getReviews);
+  const hasError = useAppSelector(getReviewsErrorStatus);
 
   useEffect(() => {
     if (id) {
@@ -20,15 +25,9 @@ function Reviews(): JSX.Element {
   const firstHalfReviews = reviews.slice(0, Math.ceil(reviews.length / 2));
   const secondHalfReviews = reviews.slice(Math.ceil(reviews.length / 2));
 
-  const formatDate = (dateString: string) => {
-    const options: Intl.DateTimeFormatOptions = {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric',
-    };
-    return new Date(dateString).toLocaleDateString(undefined, options);
-  };
-
+  if (hasError) {
+    return <ErrorMessage />;
+  }
 
   return (
     <div className="film-card__reviews film-card__row">
@@ -39,9 +38,7 @@ function Reviews(): JSX.Element {
               <p className="review__text">{review.comment}</p>
               <footer className="review__details">
                 <cite className="review__author">{review.user}</cite>
-                <time className="review__date" dateTime={new Date(review.date).toISOString()}>
-                  {formatDate(review.date)}
-                </time>
+                <time className="review__date" dateTime={getDataFormat(review.date, DateFormat.DATE_TIME_FORMAT)}>{getDataFormat(review.date, DateFormat.REVIEW_DATE_FORMAT)}</time>
               </footer>
             </blockquote>
             <div className="review__rating">{review.rating}</div>
@@ -56,9 +53,7 @@ function Reviews(): JSX.Element {
               <p className="review__text">{review.comment}</p>
               <footer className="review__details">
                 <cite className="review__author">{review.user}</cite>
-                <time className="review__date" dateTime={new Date(review.date).toISOString()}>
-                  {formatDate(review.date)}
-                </time>
+                <time className="review__date" dateTime={getDataFormat(review.date, DateFormat.DATE_TIME_FORMAT)}>{getDataFormat(review.date, DateFormat.REVIEW_DATE_FORMAT)}</time>
               </footer>
             </blockquote>
             <div className="review__rating">{review.rating}</div>

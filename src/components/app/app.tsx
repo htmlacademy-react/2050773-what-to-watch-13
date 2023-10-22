@@ -16,12 +16,23 @@ import browserHistory from '../../browser-history';
 import { getAuthorizationStatus } from '../../store/user-process/user-process.selector';
 import { getFilmsDataLoadingStatus } from '../../store/films-data/films-data.selectors';
 import { getFilms } from '../../store/films-data/films-data.selectors';
+import ErrorMessage from '../error-message/error-message';
+import { getFilmsErrorStatus } from '../../store/films-data/films-data.selectors';
 
 
 function App(): JSX.Element {
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
   const isFilmsDataLoading = useAppSelector(getFilmsDataLoadingStatus);
   const films = useAppSelector(getFilms);
+  const hasError = useAppSelector(getFilmsErrorStatus);
+
+
+  if (hasError) {
+    return (
+      <ErrorMessage />
+    );
+  }
+
 
   return (
     <HelmetProvider>

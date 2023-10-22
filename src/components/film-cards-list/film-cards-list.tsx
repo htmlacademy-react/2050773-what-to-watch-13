@@ -1,6 +1,5 @@
-import { TFilmSmallCards, TFilmSmallCard } from '../../types/films';
+import { TFilmSmallCards } from '../../types/films';
 import FilmCard from '../film-card/film-card';
-import { useState } from 'react';
 
 
 type FilmCardsListProps = {
@@ -9,12 +8,11 @@ type FilmCardsListProps = {
 
 function FilmCardsList({films}: FilmCardsListProps): JSX.Element {
 
-  const [, setActiveCard] = useState<TFilmSmallCard | null>(null);
 
   return(
     <div className="catalog__films-list">
       {films.map((film) =>
-        <FilmCard key={film.id} film={film} onHover={setActiveCard} onLeave={() => setActiveCard(null)} />)}
+        <FilmCard key={film.id} film={film} />)}
     </div>
   );
 }
