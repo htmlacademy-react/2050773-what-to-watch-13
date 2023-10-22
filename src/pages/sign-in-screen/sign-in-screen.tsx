@@ -47,6 +47,11 @@ function SignInScreen(): JSX.Element {
       <Header/>
       <div className="sign-in user-page__content">
         <form action="#" className="sign-in__form" onSubmit={handleSubmit}>
+          {errorMessage && (
+            <div className="sign-in__message">
+              <p>{errorMessage}</p>
+            </div>
+          )}
           <div className="sign-in__fields">
             <div className="sign-in__field">
               <input className="sign-in__input" type="email" placeholder="Email address" name="user-email" id="user-email" ref={loginRef} data-testid="loginElement" />
@@ -60,7 +65,6 @@ function SignInScreen(): JSX.Element {
           <div className="sign-in__submit">
             <button className="sign-in__btn" type="submit" >Sign in</button>
           </div>
-          {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
         </form>
       </div>
       <Footer />

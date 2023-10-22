@@ -25,7 +25,7 @@ function PlayerFullScreen(): JSX.Element {
   function getFormatRunTime(time: number) {
     const date = dayjs.duration(time);
 
-    return `${date.minutes()}:${date.seconds().toString().padStart(2, '0')}:${date.milliseconds().toString().padStart(2, '0')}`;
+    return `-${date.seconds().toString().padStart(2, '0')}:${date.milliseconds().toString().padStart(2, '0')}`;
   }
 
   useEffect(() => {
@@ -41,10 +41,11 @@ function PlayerFullScreen(): JSX.Element {
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const [isPlaying, setIsPlaying] = useState(true);
 
-  const togglePlayback = () => {
+  const handleTogglePlayback = () => {
     if (videoRef.current) {
-      if (isPlaying) {
+      if (isPlaying || isPause) {
         videoRef.current.pause();
+        setIsPause(false); // reset isPause when play button is clicked
       } else {
         videoRef.current.play();
       }
@@ -65,17 +66,27 @@ function PlayerFullScreen(): JSX.Element {
     if (videoRef.current) {
       setTimeLeft(Math.floor(videoRef.current.duration - videoRef.current.currentTime));
       setTimeUpdate(Math.ceil(videoRef.current.currentTime * 100 / videoRef.current.duration));
-      if(videoRef.current.duration === videoRef.current.currentTime) {
-        setIsPause(true);
-      }
     }
+  };
+
+  const handleVideoEnd = () => {
+    setIsPause(true);
+    setIsPlaying(false);
   };
 
 
   return(
     <div className="player">
-      <video ref={videoRef} onTimeUpdate={handleVideoTimeUpdate} src={film.videoLink} className="player__video" poster="img/player-poster.jpg" autoPlay></video>
-
+      <video
+        ref={videoRef}
+        onTimeUpdate={handleVideoTimeUpdate}
+        onEnded={handleVideoEnd}
+        src={film.videoLink}
+        className="player__video"
+        poster="img/player-poster.jpg"
+        autoPlay
+      >
+      </video>
       <button
         type="button"
         className="player__exit"
@@ -83,7 +94,7 @@ function PlayerFullScreen(): JSX.Element {
           if (id) {
             navigate(AppRoute.Film.replace(':id', id));
           } else {
-            console.error('ID is undefined');
+            navigate(AppRoute.Root);
           }
 
         }}
@@ -100,7 +111,7 @@ function PlayerFullScreen(): JSX.Element {
         </div>
 
         <div className="player__controls-row">
-          <button type="button" className="player__play" onClick={togglePlayback}>
+          <button type="button" className="player__play" onClick={handleTogglePlayback}>
             {isPlaying ? (
               <>
                 <svg viewBox="0 0 14 21" width="14" height="21">

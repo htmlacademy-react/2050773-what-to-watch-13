@@ -26,8 +26,6 @@ export type TFilm = {
   isFavorite: boolean;
 };
 
-export type TFilms = TFilm[];
-
 export type TPromo = {
   id: string;
   name: string;
@@ -57,3 +55,9 @@ export type TFavoriteFilm = {
   released: number;
   isFavorite: boolean;
 }
+
+
+export type ErrorDetails = {
+  message: string;
+  code: number;
+};

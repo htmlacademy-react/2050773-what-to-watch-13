@@ -4,7 +4,6 @@ import { useParams } from 'react-router-dom';
 import { useEffect } from 'react';
 import { getReviews } from '../../store/reviews-process/reviews-process.selectors';
 
-
 function Reviews(): JSX.Element {
 
   const { id } = useParams<{ id: string }>();
@@ -18,9 +17,18 @@ function Reviews(): JSX.Element {
     }
   }, [id, dispatch]);
 
-
   const firstHalfReviews = reviews.slice(0, Math.ceil(reviews.length / 2));
   const secondHalfReviews = reviews.slice(Math.ceil(reviews.length / 2));
+
+  const formatDate = (dateString: string) => {
+    const options: Intl.DateTimeFormatOptions = {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+    };
+    return new Date(dateString).toLocaleDateString(undefined, options);
+  };
+
 
   return (
     <div className="film-card__reviews film-card__row">
@@ -32,7 +40,7 @@ function Reviews(): JSX.Element {
               <footer className="review__details">
                 <cite className="review__author">{review.user}</cite>
                 <time className="review__date" dateTime={new Date(review.date).toISOString()}>
-                  {new Date(review.date).toLocaleDateString()}
+                  {formatDate(review.date)}
                 </time>
               </footer>
             </blockquote>
@@ -49,7 +57,7 @@ function Reviews(): JSX.Element {
               <footer className="review__details">
                 <cite className="review__author">{review.user}</cite>
                 <time className="review__date" dateTime={new Date(review.date).toISOString()}>
-                  {new Date(review.date).toLocaleDateString()}
+                  {formatDate(review.date)}
                 </time>
               </footer>
             </blockquote>

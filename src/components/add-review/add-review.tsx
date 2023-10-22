@@ -1,89 +1,103 @@
-import { useState } from 'react';
-import React from 'react';
-import { useAppDispatch } from '../../hooks/index';
-import { TReview } from '../../types/review';
-import { FormEvent } from 'react';
+import { Fragment, useState, ChangeEvent, FormEvent, useEffect } from 'react';
+import { useAppDispatch, useAppSelector } from '../../hooks/index';
 import { fetchSendCommentAction } from '../../store/api-actions';
-import { useNavigate } from 'react-router-dom';
-import { APIRoute } from '../../const';
+import { validateComment } from '../../utils/utils';
+import { getCommentSendingErrorStatus, getCommentSendingStatus } from '../../store/reviews-process/reviews-process.selectors';
 
+
+const REVIEW_TEXT = 'review-text';
 
 type AddReviewProps = {
   id: string;
 }
 
-function AddReview({id}: AddReviewProps): JSX.Element {
-
+function AddReview({ id }: AddReviewProps): JSX.Element {
   const dispatch = useAppDispatch();
-  const navigate = useNavigate();
+  const isSending = useAppSelector(getCommentSendingStatus);
+  const isCommentSendingError = useAppSelector(getCommentSendingErrorStatus);
+  const [hasError, setHasError] = useState(false);
 
-  const [isFormDisabled, setIsFormDisabled] = useState<boolean>(false);
-  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  useEffect(() => {
+    setHasError(false);
+  }, []);
 
-  const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
-    evt.preventDefault();
+  const [formData, setFormData] = useState({
+    rating: 0,
+    [REVIEW_TEXT]: '',
+  });
 
-    const form = evt.currentTarget;
-    const formData = new FormData(form);
-    const { rating, comment } = Object.fromEntries(formData) as unknown as TReview;
-    const ratingNumber = Number(rating);
+  const isCommentValid = validateComment(formData[REVIEW_TEXT]);
+  const [isValidComment, setValidComment] = useState(true);
 
-    const isValidReviewText = comment.length >= 50 && comment.length <= 400;
-    const isFormValid = rating && isValidReviewText;
+  const handleFormDataChange = (evt: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>) => {
+    const { name, value } = evt.target;
 
-    if (!isFormValid) {
-      setErrorMessage('Ooops, you better check your rating or text!');
-      return;
-    }
+    setFormData((prevState) => ({
+      ...prevState,
+      [name]: name === 'rating' ? Number(value) : value
+    }));
 
-    setIsFormDisabled(true);
-    setErrorMessage(null);
-
-    dispatch(fetchSendCommentAction({ rating: ratingNumber, comment, filmId: id }))
-      .then(() => {
-        navigate(`${APIRoute.Films}/${id}`);
-      })
-      .catch(() => {
-        setIsFormDisabled(false);
-        setErrorMessage('There was an error submitting your review. Please try again.');
-      });
+    setValidComment(isCommentValid);
   };
 
+  const handleFormSubmit = (evt: FormEvent<HTMLFormElement>) => {
+    evt.preventDefault();
 
-  return(
+    const rating = formData.rating;
+    const comment = formData[REVIEW_TEXT];
+
+    if (rating && isCommentValid) {
+      dispatch(fetchSendCommentAction({ filmId: id, rating, comment }));
+    }
+
+    if (!isSending && isCommentSendingError) {
+      setHasError(true);
+    }
+  };
+
+  return (
     <div className="add-review">
-      <form action="#" className="add-review__form" onSubmit={handleSubmit}>
+
+      <form
+        action="#"
+        className="add-review__form"
+        onSubmit={handleFormSubmit}
+      >
         <div className="rating">
           <div className="rating__stars">
-            {
-              Array.from({length: 10}, (_, i) => 10 - i).map((num) => (
-                <React.Fragment key={num}>
-                  <input className='rating__input'
-                    id={`star-${num}`}
-                    type='radio'
-                    name='rating'
-                    value={num.toString()}
-                    key={num}
-                  />
-                  <label className='rating__label' htmlFor={`star-${num}`}> Rating {num}</label>
-                </React.Fragment>
-              ))
-            }
+            {(Array.from({ length: 10 }, (_, k) => (
+              <Fragment key={`rating__${k}`}>
+                <input
+                  className="rating__input"
+                  id={`star-${k + 1}`}
+                  type="radio"
+                  name="rating"
+                  value={k + 1}
+                  onChange={handleFormDataChange}
+                  disabled={isSending}
+                />
+                <label className="rating__label" htmlFor={`star-${k + 1}`}>{`Rating ${k + 1}`}</label>
+              </Fragment>
+            )
+            )).reverse()}
           </div>
         </div>
+        {!formData.rating && <p>Please add rating</p>}
         <div className="add-review__text">
           <textarea
             className="add-review__textarea"
-            name="comment"
+            name="review-text"
             id="review-text"
             placeholder="Review text"
-          >
-          </textarea>
-          {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
+            onChange={handleFormDataChange}
+            disabled={isSending}
+          />
           <div className="add-review__submit">
-            <button className="add-review__btn" type="submit" disabled={isFormDisabled}>Post</button>
+            <button className="add-review__btn" type="submit" disabled={!isCommentValid || !formData.rating || isSending}>Post</button>
           </div>
         </div>
+        {!isValidComment && <p>The length must be more than 50 and less than 400</p>}
+        {hasError && <p>Something went wrong, try again</p>}
       </form>
     </div>
   );
